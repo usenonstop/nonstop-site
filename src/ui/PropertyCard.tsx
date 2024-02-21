@@ -13,6 +13,7 @@ export const PropertyCard = ({ property: p }: { property: HomeProperty }) => {
             src={p.manager.image}
             alt="Imagem do gestor"
             fill
+            sizes="80px"
             className="object-cover"
           />
         </div>
@@ -21,6 +22,7 @@ export const PropertyCard = ({ property: p }: { property: HomeProperty }) => {
         src={p.image}
         alt="Imagem do imóvel"
         fill
+        sizes="320px"
         className="object-cover"
       />
       <div className="absolute bottom-0 flex h-40 w-full flex-col justify-between bg-black/80 p-4 text-lg text-gray-200">
