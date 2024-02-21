@@ -14,6 +14,16 @@ const config = {
         hostname: "usenonstop-public.s3.sa-east-1.amazonaws.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "www.usenonstop.com",
+        port: "",
+      },
     ],
   },
 

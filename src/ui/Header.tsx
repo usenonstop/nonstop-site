@@ -17,6 +17,9 @@ export const Header = ({ title }: { title: string }) => {
         <Link className="underline" href="/destaques">
           Destaques
         </Link>
+        <Link className="underline" href="/agentes">
+          Agentes
+        </Link>
         <div className="ml-auto flex gap-2">
           <input
             placeholder="Chave API"

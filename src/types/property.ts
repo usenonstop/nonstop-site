@@ -65,6 +65,6 @@ export interface HomeProperty {
   areas: Areas;
   manager: {
     id: string;
-    image: string;
+    image: string | null;
   };
 }

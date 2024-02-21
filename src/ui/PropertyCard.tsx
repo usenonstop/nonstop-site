@@ -10,7 +10,10 @@ export const PropertyCard = ({ property: p }: { property: HomeProperty }) => {
       <div className="absolute left-4 top-4 z-10 h-20 w-20 overflow-hidden rounded-full border-2 border-gray-300">
         <div className="relative h-full w-full">
           <Image
-            src={p.manager.image}
+            src={
+              p.manager.image ??
+              "https://www.usenonstop.com/images/user-placeholder.webp"
+            }
             alt="Imagem do gestor"
             fill
             sizes="80px"

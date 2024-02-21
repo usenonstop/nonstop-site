@@ -1,4 +1,5 @@
 import { propertyRouter } from "~/server/api/routers/property";
+import { agentRouter } from "~/server/api/routers/agent";
 import { createTRPCRouter } from "~/server/api/trpc";
 
 /**
@@ -8,6 +9,7 @@ import { createTRPCRouter } from "~/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
   property: propertyRouter,
+  agent: agentRouter,
 });
 
 // export type definition of API
