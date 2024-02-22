@@ -14,7 +14,7 @@ export const propertyRouter = createTRPCRouter({
       // headers.append("Authorization", `Bearer ${env.NONSTOP_TOKEN}`);
 
       const response = await fetch(
-        "https://www.usenonstop.com/api/imoveis/home",
+        `https://www.usenonstop.com/api/imoveis/home`,
         { headers },
       );
 

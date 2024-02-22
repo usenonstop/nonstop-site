@@ -9,7 +9,7 @@ export const Header = ({ title }: { title: string }) => {
   const [, setAtom] = useAtom(tokenAtom);
 
   return (
-    <div className="flex h-60 w-full flex-col items-center">
+    <div className="flex h-52 w-full flex-col items-center">
       <div className="flex h-20 w-full items-center justify-center gap-8 px-20 text-lg">
         <Link className="underline" href="/">
           Home
@@ -36,7 +36,7 @@ export const Header = ({ title }: { title: string }) => {
           </button>
         </div>
       </div>
-      <h1 className="flex h-40 items-center justify-center text-5xl">
+      <h1 className="flex h-32 items-center justify-center text-5xl">
         {title}
       </h1>
     </div>

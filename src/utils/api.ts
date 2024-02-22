@@ -17,6 +17,12 @@ const getBaseUrl = () => {
   return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
 };
 
+export const getApiUrl = () => {
+  if (process.env.NODE_ENV === "development")
+    return `http://localhost:3001/api`;
+  return "https://www.usenonstop.com/api";
+};
+
 /** A set of type-safe react-query hooks for your tRPC API. */
 export const api = createTRPCNext<AppRouter>({
   config() {
