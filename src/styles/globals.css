@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .scrollbar {
+    @apply scrollbar-thin scrollbar-thumb-rounded-lg scrollbar-thumb-gray-300;
+  }
+}

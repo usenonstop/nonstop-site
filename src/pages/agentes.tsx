@@ -23,7 +23,7 @@ export default function Agentes() {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
       <Header title="AGENTES" />
-      <div className="flex h-[calc(100vh-208px)] w-full flex-col items-center overflow-scroll">
+      <div className="scrollbar flex h-[calc(100vh-208px)] w-full flex-col items-center overflow-scroll">
         <div className="mb-8">
           <Pagination
             total={total}

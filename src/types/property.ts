@@ -5,7 +5,7 @@ interface Values {
   propertyTax: number | null;
 }
 
-type UF =
+export type UF =
   | "AC"
   | "AL"
   | "AP"

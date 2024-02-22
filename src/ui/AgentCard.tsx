@@ -1,9 +1,13 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { AgentsPageAgent } from "~/types/agent";
 
 export const AgentCard = ({ agent }: { agent: AgentsPageAgent }) => {
   return (
-    <div className="relative h-[500px] w-80 overflow-hidden rounded-lg border shadow-lg shadow-gray-400">
+    <Link
+      href={`/agente/${agent.slug}`}
+      className="relative h-[500px] w-80 overflow-hidden rounded-lg border shadow-lg shadow-gray-400"
+    >
       <Image
         src={
           agent.profileImage ??
@@ -24,6 +28,6 @@ export const AgentCard = ({ agent }: { agent: AgentsPageAgent }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
