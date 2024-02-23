@@ -85,7 +85,7 @@ export const agentRouter = createTRPCRouter({
 
       const response = await fetch(
         // `${getApiUrl()}/agentes/portfolio/${slug}?currPage=${currPage}&perPage=${perPage}&sold=${sold}`,
-        `https://www.usenonstop.com/api/agentes/${slug}?currPage=${currPage}&perPage=${perPage}&sold=${sold}`,
+        `https://www.usenonstop.com/api/agentes/portfolio/${slug}?currPage=${currPage}&perPage=${perPage}&sold=${sold}`,
         { headers },
       );
 
