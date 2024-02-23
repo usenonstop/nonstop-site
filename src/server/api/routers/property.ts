@@ -1,7 +1,8 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+// import { env } from "~/env";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import type { HomeProperty } from "~/types/property";
+import type { CardProperty } from "~/types/property";
 
 export const propertyRouter = createTRPCRouter({
   getHome: publicProcedure
@@ -19,7 +20,7 @@ export const propertyRouter = createTRPCRouter({
       );
 
       if (response.ok) {
-        const data = (await response.json()) as { properties: HomeProperty[] };
+        const data = (await response.json()) as { properties: CardProperty[] };
         return data.properties;
       }
 
@@ -44,7 +45,7 @@ export const propertyRouter = createTRPCRouter({
       );
 
       if (response.ok) {
-        const data = (await response.json()) as { properties: HomeProperty[] };
+        const data = (await response.json()) as { properties: CardProperty[] };
         return data.properties;
       }
 

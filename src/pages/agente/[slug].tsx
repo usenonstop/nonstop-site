@@ -6,7 +6,7 @@ import type {
   InferGetServerSidePropsType,
 } from "next";
 import { Header, tokenAtom } from "~/ui/Header";
-import { NoToken } from "~/ui/NoToken";
+// import { NoToken } from "~/ui/NoToken";
 import { api } from "~/utils/api";
 import { FiShare2 } from "react-icons/fi";
 import Link from "next/link";
@@ -21,6 +21,7 @@ import { MdOutlineEmail } from "react-icons/md";
 import { AiOutlinePhone } from "react-icons/ai";
 import { RiWhatsappLine } from "react-icons/ri";
 import { Flag } from "~/ui/Flag";
+import { AgentPortfolio } from "~/ui/AgentPortfolio";
 
 type PageProps = InferGetServerSidePropsType<typeof getStaticProps>;
 
@@ -28,9 +29,7 @@ export default function Agente({ slug }: PageProps) {
   const [token] = useAtom(tokenAtom);
   const { data: agent } = api.agent.profile.useQuery(
     { token, slug },
-    {
-      enabled: !!token,
-    },
+    // { enabled: !!token, },
   );
 
   const facebook = agent?.socialMedias.find((s) => s.name === "Facebook")?.url;
@@ -44,9 +43,9 @@ export default function Agente({ slug }: PageProps) {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
       <Header title="AGENTE" />
-      <div className="scrollbar h-[calc(100vh-208px)] w-full overflow-scroll pb-40">
+      <div className="scrollbar h-[calc(100vh-208px)] w-full overflow-scroll">
         <div className="flex flex-wrap items-center justify-center gap-4">
-          {!token && <NoToken />}
+          {/* {!token && <NoToken />} */}
           {agent && (
             <div className="flex flex-col gap-8 lg:flex-row">
               <div className="flex w-64 flex-col gap-8">
@@ -87,7 +86,7 @@ export default function Agente({ slug }: PageProps) {
                   Compartilhar
                   <FiShare2 />
                 </button>
-                <div className="mt-auto flex flex-wrap gap-4 text-2xl text-gray-700">
+                <div className="flex flex-wrap gap-4 text-2xl text-gray-700">
                   {!!facebook && (
                     <Link draggable={false} href={facebook}>
                       <FaFacebook />
@@ -137,29 +136,6 @@ export default function Agente({ slug }: PageProps) {
                     </Link>
                   )}
                 </div>
-                {agent.type === "AGENTE" &&
-                  !!agent.brokerage?.profileImage &&
-                  !!agent.brokerage?.slug && (
-                    <div>
-                      <span className="font-baloo text-2xl font-medium">
-                        Agente da
-                      </span>
-                      <Link
-                        draggable={false}
-                        href={`/perfil/${agent.brokerage.slug}/#top`}
-                      >
-                        <div className="relative h-40 w-64">
-                          <Image
-                            draggable={false}
-                            className="object-cover"
-                            alt="Logo da organização"
-                            src={agent.brokerage.profileImage}
-                            fill
-                          />
-                        </div>
-                      </Link>
-                    </div>
-                  )}
                 {agent.type === "AGENTE" && agent.languages.length > 0 && (
                   <div>
                     <span className="font-baloo text-2xl font-medium">
@@ -241,6 +217,18 @@ export default function Agente({ slug }: PageProps) {
           )}
         </div>
       </div>
+
+      <h1 className="flex h-48 items-center justify-center text-5xl">
+        PORTFOLIO
+      </h1>
+
+      <AgentPortfolio slug={slug} sold={false} />
+
+      <h1 className="flex h-48 items-center justify-center text-5xl">
+        VENDIDOS
+      </h1>
+
+      <AgentPortfolio slug={slug} sold={true} />
     </div>
   );
 }

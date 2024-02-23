@@ -80,6 +80,13 @@ interface NaturalAgent {
   brokerage: BrokerageEmbed | null;
 }
 
+type JuridicalType =
+  | "IBUYER"
+  | "INCORPORADOR"
+  | "IMOBILIARIA"
+  | "FUNDO_IMOBILIARIO"
+  | "GESTAO_DE_PATRIMONIO";
+
 interface JuridicalAgent {
   slug: string;
   name: string | null;
@@ -98,12 +105,25 @@ interface JuridicalAgent {
   portfolio: Portfolio;
   reputation: number;
   id: string;
-  type:
-    | "IBUYER"
-    | "INCORPORADOR"
-    | "IMOBILIARIA"
-    | "FUNDO_IMOBILIARIO"
-    | "GESTAO_DE_PATRIMONIO";
+  type: JuridicalType;
 }
 
 export type ProfileAgent = NaturalAgent | JuridicalAgent;
+
+export interface AgentEmbed {
+  id: string;
+  name: string | null;
+  type: "AGENTE" | JuridicalType;
+  email: string;
+  corporateEmail: string | null;
+  phone: string | null;
+  whatsapp: string | null;
+  hrWhatsapp: string | null;
+  profileImage: string | null;
+  slug: string;
+  site: string | null;
+  zapRating: number | null;
+  reputation: number;
+  portfolio: Portfolio;
+  brokerage: BrokerageEmbed | null;
+}
