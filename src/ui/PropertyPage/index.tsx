@@ -49,7 +49,7 @@ export const PropertyPage = ({
   const lng = coordinates[1];
 
   return (
-    <div className="flex w-full max-w-[1440px] flex-col items-center justify-center pb-20">
+    <div className="flex w-full max-w-7xl flex-col items-center justify-center pb-20">
       <HeroImage hideFloor={hideFloor} property={property} />
 
       <AgentInfo property={property} />
