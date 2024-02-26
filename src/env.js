@@ -8,7 +8,7 @@ export const env = createEnv({
    */
   server: {
     NODE_ENV: z.enum(["development", "test", "production"]),
-    // NONSTOP_TOKEN: z.string(),
+    NONSTOP_TOKEN: z.string(),
   },
 
   /**
@@ -27,7 +27,7 @@ export const env = createEnv({
    */
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
-    // NONSTOP_TOKEN: process.env.NONSTOP_TOKEN,
+    NONSTOP_TOKEN: process.env.NONSTOP_TOKEN,
     // NEXT_PUBLIC_GOOGLE_MAPS_API_KEY:
     // process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,

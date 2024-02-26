@@ -385,3 +385,35 @@ export interface MapBound {
   NE: Location;
   SW: Location;
 }
+
+export interface TableProperty {
+  base36Id: string;
+  user: UserEmbed;
+  zip: boolean;
+  address: Address;
+  values: Values;
+  zapRating: number;
+  areas: Areas;
+  availableFor: AvailableFor[];
+  accepts: Accepts[];
+  status: Status;
+  transactionStatus: TransactionStatus;
+  pendencies: Pendency[];
+  face: Face | null;
+  baths: number | null;
+  floor: number | null;
+  mgmtDecisions: MgmtDecision[];
+  features: PropertyFeature[];
+  id: string;
+  use: "COMERCIAL" | "RESIDENCIAL";
+  condo: CondoEmbed | null;
+  image?: string | undefined;
+  sharedMgmtUserId?: string | undefined;
+  addressString: string;
+  valuePerSquareMeter: number | null;
+  parkingLots: number;
+  type: PropertyType;
+  rooms?: (number | null) | undefined;
+  suites?: (number | null) | undefined;
+  page: string;
+}

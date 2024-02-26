@@ -334,3 +334,94 @@ export const INITIAL_GOOGLE_MAPS_OPTION: Partial<google.maps.MapOptions> = {
     },
   ],
 };
+
+export const PROPERTY_SORT = [
+  "_id",
+  "user_name",
+  "type",
+  "address_street",
+  "address_area",
+  "values_sale",
+  "valuePerSquareMeter",
+  "values_longStay",
+  "zapRating",
+  "transactionStatus",
+] as const;
+
+export const MANAGED_BY = [
+  "MIM_EXCLUSIVOS",
+  "MIM_NAO_EXCLUSIVOS",
+  "IMOBILIARIA_EXCLUSIVOS",
+  "IMOBILIARIA_NAO_EXCLUSIVOS",
+  "PARCEIROS",
+] as const;
+
+export const PROPERTY_USE = ["COMERCIAL", "RESIDENCIAL"] as const;
+
+export const RESIDENTIAL_TYPE = [
+  "TERRENO_RESIDENCIAL",
+  "APARTAMENTO_GARDEN",
+  "APARTAMENTO_TIPO",
+  "CASA_DE_VILA",
+  "CASA_EM_CONDOMINIO",
+  "CASA_TIPO",
+  "COBERTURA",
+  "DUPLEX",
+  "FLAT",
+  "KITNET",
+  "LOFT",
+  "SOBRADO",
+  "STUDIO",
+  "TRIPLEX",
+] as const;
+
+export const COMMERCIAL_TYPE = [
+  "TERRENO_COMERCIAL",
+  "CASA_COMERCIAL",
+  "CONJUNTO_COMERCIAL",
+  "EDIFICIO_MONOUSUARIO",
+  "GALPAO",
+  "LAGE_CORPORATIVA",
+  "LOJA_DE_RUA",
+] as const;
+
+export const PROPERTY_STATUS = [
+  "LANCAMENTO",
+  "CONSTRUCAO",
+  "REFORMA",
+  "NOVO",
+  "PADRAO",
+] as const;
+
+export const TRANSACTION_STATUS = [
+  "SEM_OBSERVACOES",
+  "EM_NEGOCIACAO",
+  "VENDIDO",
+  "ALUGADO",
+  "BAIXOU_PRECO",
+] as const;
+
+export const FILTER_AVAILABLE_FOR = [
+  "VENDA",
+  "LOCACAO",
+  "VENDA_E_LOCACAO",
+  "INDISPONIVEL",
+] as const;
+
+export const FILTER_ACCEPTS = [
+  "PERMUTA",
+  "FINANCIAMENTO",
+  "INDIFERENTE",
+] as const;
+
+export const FILTER_FACE = [
+  "N",
+  "NE",
+  "E",
+  "SE",
+  "S",
+  "SW",
+  "W",
+  "NW",
+  "ANY",
+] as const;
