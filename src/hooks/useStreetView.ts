@@ -1,6 +1,6 @@
 import { Loader } from "@googlemaps/js-api-loader";
 import { useCallback, useRef } from "react";
-import { env } from "~/env";
+// import { env } from "~/env";
 
 const initialOptions = {
   position: { lat: -23.57, lng: -46.65 },
@@ -18,7 +18,8 @@ export const useStreetView = ({
     if (!ref.current) return;
     if (typeof google === "undefined") {
       const loader = new Loader({
-        apiKey: env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+        // apiKey: env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+        apiKey: "",
         version: "weekly",
       });
       await loader.load();
