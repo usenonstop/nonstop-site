@@ -1,8 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
 import { BiArea, BiCar } from "react-icons/bi";
 import { FaBath, FaBed } from "react-icons/fa";
 
 import type { CardProperty } from "~/types/property";
+import { Avatar } from "~/ui/Avatar";
 
 export const PropertyCard = ({
   property: p,
@@ -12,23 +14,11 @@ export const PropertyCard = ({
   withAvatar?: boolean;
 }) => {
   return (
-    <div className="relative h-[500px] w-80 overflow-hidden rounded-lg border shadow-lg shadow-gray-400">
-      {withAvatar && (
-        <div className="absolute left-4 top-4 z-10 h-20 w-20 overflow-hidden rounded-full border-2 border-gray-300">
-          <div className="relative h-full w-full">
-            <Image
-              src={
-                p.user.profileImage ??
-                "https://www.usenonstop.com/images/user-placeholder.webp"
-              }
-              alt="Imagem do gestor"
-              fill
-              sizes="80px"
-              className="object-cover"
-            />
-          </div>
-        </div>
-      )}
+    <Link
+      href={`/imovel/${p.base36Id}`}
+      className="relative h-[500px] w-80 overflow-hidden rounded-lg border shadow-lg shadow-gray-400"
+    >
+      {withAvatar && <Avatar src={p.user.profileImage} />}
       <Image
         src={
           p.image ?? "https://www.usenonstop.com/images/image-placeholder.webp"
@@ -84,6 +74,6 @@ export const PropertyCard = ({
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };

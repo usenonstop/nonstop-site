@@ -12,7 +12,7 @@ export default function Agentes() {
   const { currPage, perPage } = pagination;
   const { data } = api.agent.get.useQuery(
     { token, currPage, perPage },
-    // { enabled: !!token, },
+    { enabled: !!token },
   );
 
   const agents = data?.agents ?? [];
@@ -21,16 +21,20 @@ export default function Agentes() {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
       <Header title="AGENTES" />
-      <div className="scrollbar flex h-[calc(100vh-208px)] w-full flex-col items-center overflow-scroll">
+      <div className="flex h-[calc(100vh-208px)] w-full flex-col items-center overflow-scroll scrollbar">
         <div className="mb-8">
-          <Pagination
-            total={total}
-            pagination={pagination}
-            onClick={(p) => setPagination((prev) => ({ ...prev, currPage: p }))}
-          />
+          {token && (
+            <Pagination
+              total={total}
+              pagination={pagination}
+              onClick={(p) =>
+                setPagination((prev) => ({ ...prev, currPage: p }))
+              }
+            />
+          )}
         </div>
         <div className="flex flex-wrap items-center justify-center gap-4">
-          {/* {!token && <NoToken />} */}
+          {!token && <NoToken />}
           {agents?.map((a) => <AgentCard key={a.id} agent={a} />)}
         </div>
       </div>

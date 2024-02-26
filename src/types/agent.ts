@@ -110,7 +110,7 @@ interface JuridicalAgent {
 
 export type ProfileAgent = NaturalAgent | JuridicalAgent;
 
-export interface AgentEmbed {
+export interface UserEmbed {
   id: string;
   name: string | null;
   type: "AGENTE" | JuridicalType;

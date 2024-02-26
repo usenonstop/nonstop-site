@@ -1,4 +1,4 @@
-import type { AgentEmbed } from "~/types/agent";
+import type { UserEmbed } from "~/types/agent";
 
 interface Values {
   sale: number | null;
@@ -37,6 +37,56 @@ export type PropertyType =
   | "TERRENO_RESIDENCIAL"
   | "TRIPLEX";
 
+type PropertyFeature =
+  | "ADEGA_CLIMATIZADA"
+  | "AGUA_QUENTE"
+  | "AQUECIMENTO_CENTRAL"
+  | "AQUECIMENTO_SOLAR"
+  | "ALARME"
+  | "AR_CONDICIONADO_CENTRAL"
+  | "AREA_SERVICO"
+  | "BANHEIRO_SERVICO"
+  | "BANHEIRO_SR_SRA"
+  | "CARPETE"
+  | "CHURRASQUEIRA"
+  | "CLOSET"
+  | "COPA"
+  | "COZINHA_INTEGRADA"
+  | "DEPENDENCIA_DE_FUNCIONARIO"
+  | "DEPOSITO"
+  | "DESPENSA"
+  | "ELEVADOR_PRIVATIVO"
+  | "ESPACO_GOURMET"
+  | "GAS_ENCANADO"
+  | "HALL_PRIVATIVO"
+  | "HIDROMASSAGEM"
+  | "HOME_OFFICE"
+  | "HOME_THEATER"
+  | "INFRAESTRUTURA_AR_CONDICIONADO"
+  | "INTERFONE"
+  | "JANELA_TETO_CHAO"
+  | "JARDIM"
+  | "LAREIRA"
+  | "LAVABO"
+  | "LOCACAO_NAO_ACEITA_PET"
+  | "MOBILIADO"
+  | "MOVEIS_PLANEJADOS"
+  | "OFURO"
+  | "PISCINA"
+  | "PISO_MADEIRA"
+  | "PISO_PORCELANATO"
+  | "PISO_LAMINADO"
+  | "PISO_VINILICO"
+  | "SACADA"
+  | "SALA_INTIMA"
+  | "SALA_CINEMA"
+  | "SAUNA_SECA"
+  | "SAUNA_UMIDA"
+  | "VISTA_PARA_CIDADE"
+  | "VISTA_PARA_MAR"
+  | "VISTA_PANORAMICA"
+  | "VISTA_PERMANENTE";
+
 export type UF =
   | "AC"
   | "AL"
@@ -66,7 +116,7 @@ export type UF =
   | "SE"
   | "TO";
 
-interface Address {
+export interface Address {
   street: string;
   number: string;
   complement: string | null;
@@ -94,7 +144,7 @@ export interface CardProperty {
   zapRating: number;
   areas: Areas;
   address: Address;
-  user: AgentEmbed;
+  user: UserEmbed;
   zip: boolean;
   condo: CondoEmbed | null;
   id: string;
@@ -168,7 +218,7 @@ type CondoFeatures =
   | "VESTIARIO"
   | "ZELADOR";
 
-interface MediaFile {
+export interface MediaFile {
   id: string;
   name: string;
   type: string;
@@ -192,4 +242,146 @@ interface CondoEmbed {
   zip: boolean;
   address: Address;
   yearOfConstruction: number | null;
+}
+
+export interface ParkingLot {
+  id: string;
+  size: "PEQUENA" | "MEDIA" | "GRANDE";
+  type: "DETERMINADA" | "INDETERMINADA";
+  notes: string | null;
+}
+
+export type MgmtDecision =
+  | "OCULTAR_ENDERECO"
+  | "OCULTAR_ANDAR"
+  | "OCULTAR_PRECO"
+  | "COMPARTILHAR_APENAS_COM_PARCEIROS"
+  | "NAO_PERMITIR_PORTAIS";
+
+type Face = "N" | "NE" | "E" | "SE" | "S" | "SW" | "W" | "NW";
+
+type AvailableFor = "VENDA" | "LOCACAO";
+
+type Accepts = "PERMUTA" | "FINANCIAMENTO";
+
+type Status = "LANCAMENTO" | "CONSTRUCAO" | "REFORMA" | "NOVO" | "PADRAO";
+
+type Pendency =
+  | "ALIENACAO_FIDUCIARIA"
+  | "DEBITO_DE_CONDOMINIO"
+  | "DEBITO_DE_IPTU"
+  | "INVENTARIO"
+  | "PENHORA"
+  | "PROPRIETARIO_INCAPAZ"
+  | "USUFRUTO";
+
+type ResidentialType =
+  | "TERRENO_RESIDENCIAL"
+  | "APARTAMENTO_GARDEN"
+  | "APARTAMENTO_TIPO"
+  | "CASA_DE_VILA"
+  | "CASA_EM_CONDOMINIO"
+  | "CASA_TIPO"
+  | "COBERTURA"
+  | "DUPLEX"
+  | "FLAT"
+  | "KITNET"
+  | "LOFT"
+  | "SOBRADO"
+  | "STUDIO"
+  | "TRIPLEX";
+
+type CommercialType =
+  | "TERRENO_COMERCIAL"
+  | "CASA_COMERCIAL"
+  | "CONJUNTO_COMERCIAL"
+  | "EDIFICIO_MONOUSUARIO"
+  | "GALPAO"
+  | "LAGE_CORPORATIVA"
+  | "LOJA_DE_RUA";
+
+interface ResidentialProperty {
+  id: string;
+  availableFor: AvailableFor[];
+  accepts: Accepts[];
+  status: Status;
+  baths: number | null;
+  floor: number | null;
+  face: Face | null;
+  user: UserEmbed;
+  sharedMgmtUser: UserEmbed | null;
+  values: Values;
+  areas: Areas;
+  yearOfConstruction: number | null;
+  condo: CondoEmbed | null;
+  address: Address;
+  description: string;
+  privateObservations: string | null;
+  parkingLots: ParkingLot[];
+  features: PropertyFeature[];
+  mgmtDecisions: MgmtDecision[];
+  pendencies: Pendency[];
+  base36Id: string;
+  zapRating: number;
+  transactionStatus: TransactionStatus;
+  media: Media;
+  updatedAt: Date;
+  createdAt: Date;
+  use: "RESIDENCIAL";
+  type: ResidentialType;
+  rooms: number | null;
+  suites: number | null;
+}
+
+interface CommercialProperty {
+  id: string;
+  availableFor: AvailableFor[];
+  accepts: Accepts[];
+  status: Status;
+  baths: number | null;
+  floor: number | null;
+  face: Face | null;
+  user: UserEmbed;
+  sharedMgmtUser: UserEmbed | null;
+  values: Values;
+  areas: Areas;
+  yearOfConstruction: number | null;
+  condo: CondoEmbed | null;
+  address: Address;
+  description: string;
+  privateObservations: string | null;
+  parkingLots: ParkingLot[];
+  features: PropertyFeature[];
+  mgmtDecisions: MgmtDecision[];
+  pendencies: Pendency[];
+  base36Id: string;
+  zapRating: number;
+  transactionStatus: TransactionStatus;
+  media: Media;
+  updatedAt: Date;
+  createdAt: Date;
+  use: "COMERCIAL";
+  type: CommercialType;
+  rooms: number | null;
+  suites: number | null;
+}
+
+export type PropertyDTO = ResidentialProperty | CommercialProperty;
+
+export type MediaType =
+  | "images"
+  | "condo-images"
+  | "videos"
+  | "floorplans"
+  | "streetview"
+  | "tours";
+
+interface Location {
+  lat: number;
+  lng: number;
+}
+
+export interface MapBound {
+  NE: Location;
+  SW: Location;
 }

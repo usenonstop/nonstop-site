@@ -1,8 +1,10 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 // import { env } from "~/env";
+// import { env } from "~/env";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import type { CardProperty } from "~/types/property";
+import type { CardProperty, PropertyDTO } from "~/types/property";
+// import { getApiUrl } from "~/utils/api";
 
 export const propertyRouter = createTRPCRouter({
   getHome: publicProcedure
@@ -47,6 +49,36 @@ export const propertyRouter = createTRPCRouter({
       if (response.ok) {
         const data = (await response.json()) as { properties: CardProperty[] };
         return data.properties;
+      }
+
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Ops, houve um problema",
+      });
+    }),
+
+  get: publicProcedure
+    .input(
+      z.object({
+        base36Id: z.string().nullable(),
+        token: z.string().nullable(),
+      }),
+    )
+    .query(async ({ input: { base36Id, token } }) => {
+      const headers = new Headers();
+      headers.append("Content-Type", "application/json");
+      headers.append("Authorization", `Bearer ${token}`);
+      // Em produção usar o token aqui como env.var
+      // headers.append("Authorization", `Bearer ${env.NONSTOP_TOKEN}`);
+
+      const response = await fetch(
+        `https://www.usenonstop.com/api/imoveis/${base36Id}`,
+        // `${getApiUrl()}/imoveis/${base36Id}`,
+        { headers },
+      );
+
+      if (response.ok) {
+        return ((await response.json()) as { property: PropertyDTO }).property;
       }
 
       throw new TRPCError({

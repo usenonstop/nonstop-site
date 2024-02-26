@@ -7,7 +7,7 @@ import { inter } from "~/ui/fonts";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
-    <main className={inter.className}>
+    <main id="main" className={`${inter.className} relative`}>
       <Component {...pageProps} />
     </main>
   );
