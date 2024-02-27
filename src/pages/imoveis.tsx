@@ -103,7 +103,7 @@ export default function Imoveis() {
       </div>
       <div className="flex h-[calc(100vh-272px)] w-full p-4">
         {!showMap && (
-          <div className="flex h-full w-1/4 flex-col gap-2 border p-4 shadow-inner shadow-gray-300">
+          <div className="flex h-full w-1/4 flex-col gap-2 overflow-scroll border p-4 shadow-inner shadow-gray-300 scrollbar">
             <input
               placeholder="Endereço, Agente, Imobiliária, Condomínio ou Código"
               value={input}
@@ -129,7 +129,7 @@ export default function Imoveis() {
                 label="Cidade"
               />
             </div>
-            <div className="mt-6 h-[calc(100%-64px)] overflow-scroll px-2 pb-10 scrollbar">
+            <div className="mt-6 px-2 pb-10">
               <PropertyFilter />
             </div>
           </div>
