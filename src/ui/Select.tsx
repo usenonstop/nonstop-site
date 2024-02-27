@@ -59,7 +59,7 @@ export const Select = <T extends string>({
         </>
       </Listbox.Button>
       <div>
-        <Listbox.Options className="border-ns-gray-300 focus:outline-ns-300 absolute z-10 max-h-96 w-full overflow-scroll rounded-b-lg border border-t-0 border-solid bg-white shadow-sm outline-2 scrollbar-thin scrollbar-thumb-gray-200 scrollbar-thumb-rounded-lg">
+        <Listbox.Options className="border-ns-gray-300 focus:outline-ns-300 absolute z-10 max-h-96 w-full overflow-scroll rounded-b-lg border border-t-0 border-solid bg-white shadow-sm outline-2 scrollbar">
           {hasOptions &&
             options.map((o) => (
               <Listbox.Option

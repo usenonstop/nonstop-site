@@ -1,5 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { UF_FILTER } from "~/consts/property";
 import { env } from "~/env";
 import { getAllInputSchema, getMarkersInputSchema } from "~/schemas/property";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
@@ -149,6 +150,35 @@ export const propertyRouter = createTRPCRouter({
 
       if (response.ok) {
         return ((await response.json()) as { states: UF[] }).states;
+      }
+
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Ops, houve um problema",
+      });
+    }),
+
+  "get-cities": publicProcedure
+    .input(
+      z.object({
+        token: z.string().nullish(),
+        state: z.enum(UF_FILTER),
+        query: z.string(),
+      }),
+    )
+    .query(async ({ input }) => {
+      const { state, token, query } = input;
+      const headers = new Headers();
+      headers.append("Content-Type", "application/json");
+      headers.append("Authorization", `Bearer ${token ?? env.NONSTOP_TOKEN}`);
+
+      const response = await fetch(
+        `${getApiUrl()}/imoveis/cidades?state=${state}&query=${query}`,
+        { headers },
+      );
+
+      if (response.ok) {
+        return ((await response.json()) as { cities: string[] }).cities;
       }
 
       throw new TRPCError({

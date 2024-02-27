@@ -10,7 +10,7 @@ import {
 import { PROPERTY_SORT_OPTIONS } from "~/consts/property";
 import { sortingToQuery } from "~/fns/sortingToQuery";
 import { useDebounce } from "~/hooks/useDebounce";
-import type { SortingState } from "~/types/property";
+import type { SortingState, StateFilter } from "~/types/property";
 import { Header, tokenAtom } from "~/ui/Header";
 import { MapButton } from "~/ui/MapButton";
 import { Pagination } from "~/ui/Pagination";
@@ -23,7 +23,7 @@ import { Results } from "~/ui/Results";
 import { SortingButton } from "~/ui/SortingButton";
 import { Select } from "~/ui/Select";
 import { api } from "~/utils/api";
-// import { Autocomplete } from "~/ui/Autocomplete";
+import { Autocomplete } from "~/ui/Autocomplete";
 
 export default function Imoveis() {
   const [token] = useAtom(tokenAtom);
@@ -35,8 +35,10 @@ export default function Imoveis() {
   const [perimeters] = useAtom(propertyPerimetersAtom);
   const [input, setInput] = useState("");
   const [search, setSearch] = useAtom(propertySearchAtom);
+  const [cityQuery, setCityQuery] = useState("");
   const debouncedInput = useDebounce(input, 400);
   const debouncedFilters = useDebounce(filters, 400);
+  const debouncedCityQuery = useDebounce(cityQuery, 400);
 
   useEffect(() => {
     setSearch(debouncedInput);
@@ -52,10 +54,18 @@ export default function Imoveis() {
     perimeters,
   });
 
-  const { data: states } = api.property["get-states"].useQuery(token);
+  const { data: statesData } = api.property["get-states"].useQuery(token);
+
+  const { data: citiesData, isLoading } = api.property["get-cities"].useQuery({
+    token,
+    state: filters.state,
+    query: debouncedCityQuery,
+  });
 
   const properties = data?.properties ?? [];
   const total = data?.total ?? 0;
+  const states = statesData ? (["TODOS", ...statesData] as StateFilter[]) : [];
+  const cities = citiesData ?? [];
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
@@ -100,24 +110,24 @@ export default function Imoveis() {
               onChange={(e) => setInput(e.target.value)}
               className="w-full rounded border p-2"
             />
-            <div className="text-gray-700">
+            <div className="flex flex-col gap-2 text-gray-700">
               <Select
                 label="UF"
                 value={filters.state}
                 onChange={(s) => setFilters((f) => ({ ...f, state: s }))}
                 name="state"
-                options={states ?? []}
+                options={states}
               />
-              {/* <Autocomplete */}
-              {/*   name="city" */}
-              {/*   isLoading={true} */}
-              {/*   onClose={() => handleChangeCity(null, value.state)} */}
-              {/*   options={cities ?? []} */}
-              {/*   onChange={(city) => handleChangeCity(city, value.state)} */}
-              {/*   onChangeInput={(i) => setQuery(i)} */}
-              {/*   value={value.city} */}
-              {/*   label="Cidade" */}
-              {/* /> */}
+              <Autocomplete
+                name="city"
+                isLoading={isLoading}
+                onClose={() => setFilters((f) => ({ ...f, city: "TODAS" }))}
+                options={cities}
+                onChange={(city) => setFilters((f) => ({ ...f, city }))}
+                onChangeInput={(i) => setCityQuery(i)}
+                value={filters.city}
+                label="Cidade"
+              />
             </div>
             <div className="mt-6 h-[calc(100%-64px)] overflow-scroll px-2 pb-10 scrollbar">
               <PropertyFilter />
