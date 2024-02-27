@@ -6,7 +6,7 @@ import type {
 } from "next";
 import { Header, tokenAtom } from "~/ui/Header";
 import { api } from "~/utils/api";
-import { NoToken } from "~/ui/NoToken";
+// import { NoToken } from "~/ui/NoToken";
 import { PropertyPage } from "~/ui/PropertyPage";
 
 type PageProps = InferGetServerSidePropsType<typeof getStaticProps>;
@@ -15,7 +15,7 @@ export default function Imovel({ base36Id }: PageProps) {
   const [token] = useAtom(tokenAtom);
   const { data: property } = api.property.get.useQuery(
     { token, base36Id },
-    { enabled: !!token },
+    // { enabled: !!token },
   );
 
   return (
@@ -23,7 +23,7 @@ export default function Imovel({ base36Id }: PageProps) {
       <Header title="IMÓVEL" />
       <div className="h-[calc(100vh-208px)] w-full overflow-scroll scrollbar">
         <div className="flex flex-wrap items-center justify-center gap-4">
-          {!token && <NoToken />}
+          {/* {!token && <NoToken />} */}
           {property && <PropertyPage property={property} />}
         </div>
       </div>

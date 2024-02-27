@@ -1,16 +1,16 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-// import { env } from "~/env";
+import { env } from "~/env";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import type { AgentsPageAgent, ProfileAgent } from "~/types/agent";
 import type { CardProperty } from "~/types/property";
-// import { getApiUrl } from "~/utils/api";
+import { getApiUrl } from "~/utils/api";
 
 export const agentRouter = createTRPCRouter({
   get: publicProcedure
     .input(
       z.object({
-        token: z.string().nullable(),
+        token: z.string().nullish(),
         currPage: z.number(),
         perPage: z.number(),
       }),
@@ -18,13 +18,10 @@ export const agentRouter = createTRPCRouter({
     .query(async ({ input: { perPage, currPage, token } }) => {
       const headers = new Headers();
       headers.append("Content-Type", "application/json");
-      headers.append("Authorization", `Bearer ${token}`);
-      // Em produção usar o token aqui como env.var
-      // headers.append("Authorization", `Bearer ${env.NONSTOP_TOKEN}`);
+      headers.append("Authorization", `Bearer ${token ?? env.NONSTOP_TOKEN}`);
 
       const response = await fetch(
-        // `${getApiUrl()}/agentes/todos?perPage=${perPage}&currPage=${currPage}`,
-        `https://www.usenonstop.com/api/agentes/todos?perPage=${perPage}&currPage=${currPage}`,
+        `${getApiUrl()}/agentes/todos?perPage=${perPage}&currPage=${currPage}`,
         { headers },
       );
 
@@ -42,19 +39,15 @@ export const agentRouter = createTRPCRouter({
     }),
 
   profile: publicProcedure
-    .input(z.object({ token: z.string().nullable(), slug: z.string() }))
+    .input(z.object({ token: z.string().nullish(), slug: z.string() }))
     .query(async ({ input: { slug, token } }) => {
       const headers = new Headers();
       headers.append("Content-Type", "application/json");
-      headers.append("Authorization", `Bearer ${token}`);
-      // Em produção usar o token aqui como env.var
-      // headers.append("Authorization", `Bearer ${env.NONSTOP_TOKEN}`);
+      headers.append("Authorization", `Bearer ${token ?? env.NONSTOP_TOKEN}`);
 
-      const response = await fetch(
-        // `${getApiUrl()}/agentes/${slug}`,
-        `https://www.usenonstop.com/api/agentes/${slug}`,
-        { headers },
-      );
+      const response = await fetch(`${getApiUrl()}/agentes/${slug}`, {
+        headers,
+      });
 
       if (response.ok) {
         return ((await response.json()) as { agent: ProfileAgent }).agent;
@@ -69,7 +62,7 @@ export const agentRouter = createTRPCRouter({
   portfolio: publicProcedure
     .input(
       z.object({
-        token: z.string().nullable(),
+        token: z.string().nullish(),
         slug: z.string(),
         currPage: z.number(),
         perPage: z.number(),
@@ -79,13 +72,10 @@ export const agentRouter = createTRPCRouter({
     .query(async ({ input: { slug, currPage, perPage, sold, token } }) => {
       const headers = new Headers();
       headers.append("Content-Type", "application/json");
-      headers.append("Authorization", `Bearer ${token}`);
-      // Em produção usar o token aqui como env.var
-      // headers.append("Authorization", `Bearer ${env.NONSTOP_TOKEN}`);
+      headers.append("Authorization", `Bearer ${token ?? env.NONSTOP_TOKEN}`);
 
       const response = await fetch(
-        // `${getApiUrl()}/agentes/portfolio/${slug}?currPage=${currPage}&perPage=${perPage}&sold=${sold}`,
-        `https://www.usenonstop.com/api/agentes/portfolio/${slug}?currPage=${currPage}&perPage=${perPage}&sold=${sold}`,
+        `${getApiUrl()}/agentes/portfolio/${slug}?currPage=${currPage}&perPage=${perPage}&sold=${sold}`,
         { headers },
       );
 

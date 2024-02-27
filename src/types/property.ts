@@ -1,3 +1,11 @@
+import type { z } from "zod";
+import type {
+  FILTER_ACCEPTS,
+  FILTER_AVAILABLE_FOR,
+  FILTER_FACE,
+  PROPERTY_USE,
+} from "~/consts/property";
+import type { minMaxSchema } from "~/schemas/property";
 import type { UserEmbed } from "~/types/agent";
 
 interface Values {
@@ -264,7 +272,12 @@ type AvailableFor = "VENDA" | "LOCACAO";
 
 type Accepts = "PERMUTA" | "FINANCIAMENTO";
 
-type Status = "LANCAMENTO" | "CONSTRUCAO" | "REFORMA" | "NOVO" | "PADRAO";
+export type Status =
+  | "LANCAMENTO"
+  | "CONSTRUCAO"
+  | "REFORMA"
+  | "NOVO"
+  | "PADRAO";
 
 type Pendency =
   | "ALIENACAO_FIDUCIARIA"
@@ -275,7 +288,7 @@ type Pendency =
   | "PROPRIETARIO_INCAPAZ"
   | "USUFRUTO";
 
-type ResidentialType =
+export type ResidentialType =
   | "TERRENO_RESIDENCIAL"
   | "APARTAMENTO_GARDEN"
   | "APARTAMENTO_TIPO"
@@ -291,7 +304,7 @@ type ResidentialType =
   | "STUDIO"
   | "TRIPLEX";
 
-type CommercialType =
+export type CommercialType =
   | "TERRENO_COMERCIAL"
   | "CASA_COMERCIAL"
   | "CONJUNTO_COMERCIAL"
@@ -417,3 +430,31 @@ export interface TableProperty {
   suites?: (number | null) | undefined;
   page: string;
 }
+
+export type Sort = Record<string, 1 | -1>;
+
+export type AcceptsFilter = (typeof FILTER_ACCEPTS)[number];
+
+export type MinMax = z.infer<typeof minMaxSchema>;
+
+export type FilterFace = (typeof FILTER_FACE)[number];
+
+export interface ColumnSort {
+  id: string;
+  desc: boolean;
+}
+export type SortingState = ColumnSort[];
+
+export type FilterAvailableFor = (typeof FILTER_AVAILABLE_FOR)[number];
+
+export type PropertyUse = (typeof PROPERTY_USE)[number];
+
+export type Marker = {
+  id: string;
+  position: {
+    lat: number;
+    lng: number;
+  };
+  selected: boolean;
+  size: number;
+};

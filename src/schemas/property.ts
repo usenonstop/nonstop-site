@@ -58,6 +58,7 @@ export const propertyFilterSchema = z.object({
 });
 
 export const getAllInputSchema = z.object({
+  token: z.string().nullish(),
   pagination: paginationSchema,
   search: z.string(),
   sort: propertySortBySchema,

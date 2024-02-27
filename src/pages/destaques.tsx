@@ -1,13 +1,13 @@
 import { useAtom } from "jotai";
 import { Header, tokenAtom } from "~/ui/Header";
-import { NoToken } from "~/ui/NoToken";
+// import { NoToken } from "~/ui/NoToken";
 import { PropertyCard } from "~/ui/PropertyCard";
 import { api } from "~/utils/api";
 
 export default function Destaques() {
   const [token] = useAtom(tokenAtom);
-  const { data: properties } = api.property.getHighlight.useQuery(token, {
-    enabled: !!token,
+  const { data: properties } = api.property["get-highlight"].useQuery(token, {
+    // enabled: !!token,
   });
 
   return (
@@ -15,7 +15,7 @@ export default function Destaques() {
       <Header title="DESTAQUES" />
       <div className="h-[calc(100vh-208px)] w-full overflow-scroll scrollbar">
         <div className="flex flex-wrap items-center justify-center gap-4">
-          {!token && <NoToken />}
+          {/* {!token && <NoToken />} */}
           {properties?.map((p) => <PropertyCard key={p.id} property={p} />)}
         </div>
       </div>

@@ -5,7 +5,7 @@ import { useCallback, useRef } from "react";
 import { getMapBounds } from "~/fns/getMapBounds";
 import { INITIAL_GOOGLE_MAPS_OPTION } from "~/consts/property";
 import type { MapBound } from "~/types/property";
-// import { env } from "~/env";
+import { env } from "~/env";
 
 export const useGoogleMap = ({
   options,
@@ -30,8 +30,7 @@ export const useGoogleMap = ({
 
     if (typeof google === "undefined") {
       const loader = new Loader({
-        // apiKey: env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
-        apiKey: "",
+        apiKey: env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
         version: "weekly",
         libraries,
       });

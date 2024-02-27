@@ -13,7 +13,7 @@ export const PropertyMap = ({
       map,
       position: center,
       icon: {
-        url: "/icons/map-marker.svg",
+        url: "https://www.usenonstop.com/icons/map-marker.svg",
         anchor: new google.maps.Point(55, 55),
       },
     });

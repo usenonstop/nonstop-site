@@ -2,7 +2,7 @@ import { useAtom } from "jotai";
 import { useState } from "react";
 import { AgentCard } from "~/ui/AgentCard";
 import { Header, tokenAtom } from "~/ui/Header";
-import { NoToken } from "~/ui/NoToken";
+// import { NoToken } from "~/ui/NoToken";
 import { Pagination } from "~/ui/Pagination";
 import { api } from "~/utils/api";
 
@@ -12,7 +12,7 @@ export default function Agentes() {
   const { currPage, perPage } = pagination;
   const { data } = api.agent.get.useQuery(
     { token, currPage, perPage },
-    { enabled: !!token },
+    // { enabled: !!token },
   );
 
   const agents = data?.agents ?? [];
@@ -34,7 +34,7 @@ export default function Agentes() {
           )}
         </div>
         <div className="flex flex-wrap items-center justify-center gap-4">
-          {!token && <NoToken />}
+          {/* {!token && <NoToken />} */}
           {agents?.map((a) => <AgentCard key={a.id} agent={a} />)}
         </div>
       </div>

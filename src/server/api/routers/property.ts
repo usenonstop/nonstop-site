@@ -1,28 +1,25 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { env } from "~/env";
+import { getAllInputSchema } from "~/schemas/property";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import type {
   CardProperty,
+  Marker,
   PropertyDTO,
   TableProperty,
 } from "~/types/property";
-// import { getApiUrl } from "~/utils/api";
+import { getApiUrl } from "~/utils/api";
 
 export const propertyRouter = createTRPCRouter({
-  getHome: publicProcedure
-    .input(z.string().nullable())
+  "get-home": publicProcedure
+    .input(z.string().nullish())
     .query(async ({ input: token }) => {
       const headers = new Headers();
       headers.append("Content-Type", "application/json");
-      headers.append("Authorization", `Bearer ${token}`);
-      // Em produção usar o token aqui como env.var
-      // headers.append("Authorization", `Bearer ${env.NONSTOP_TOKEN}`);
+      headers.append("Authorization", `Bearer ${token ?? env.NONSTOP_TOKEN}`);
 
-      const response = await fetch(
-        `https://www.usenonstop.com/api/imoveis/home`,
-        { headers },
-      );
+      const response = await fetch(`${getApiUrl()}/imoveis/home`, { headers });
 
       if (response.ok) {
         const data = (await response.json()) as { properties: CardProperty[] };
@@ -35,19 +32,16 @@ export const propertyRouter = createTRPCRouter({
       });
     }),
 
-  getHighlight: publicProcedure
-    .input(z.string().nullable())
+  "get-highlight": publicProcedure
+    .input(z.string().nullish())
     .query(async ({ input: token }) => {
       const headers = new Headers();
       headers.append("Content-Type", "application/json");
-      headers.append("Authorization", `Bearer ${token}`);
-      // Em produção usar o token aqui como env.var
-      // headers.append("Authorization", `Bearer ${env.NONSTOP_TOKEN}`);
+      headers.append("Authorization", `Bearer ${token ?? env.NONSTOP_TOKEN}`);
 
-      const response = await fetch(
-        "https://www.usenonstop.com/api/imoveis/destaque",
-        { headers },
-      );
+      const response = await fetch(`${getApiUrl()}/imoveis/destaque`, {
+        headers,
+      });
 
       if (response.ok) {
         const data = (await response.json()) as { properties: CardProperty[] };
@@ -64,21 +58,17 @@ export const propertyRouter = createTRPCRouter({
     .input(
       z.object({
         base36Id: z.string().nullable(),
-        token: z.string().nullable(),
+        token: z.string().nullish(),
       }),
     )
     .query(async ({ input: { base36Id, token } }) => {
       const headers = new Headers();
       headers.append("Content-Type", "application/json");
-      headers.append("Authorization", `Bearer ${token}`);
-      // Em produção usar o token aqui como env.var
-      // headers.append("Authorization", `Bearer ${env.NONSTOP_TOKEN}`);
+      headers.append("Authorization", `Bearer ${token ?? env.NONSTOP_TOKEN}`);
 
-      const response = await fetch(
-        `https://www.usenonstop.com/api/imoveis/${base36Id}`,
-        // `${getApiUrl()}/imoveis/${base36Id}`,
-        { headers },
-      );
+      const response = await fetch(`${getApiUrl()}/imoveis/${base36Id}`, {
+        headers,
+      });
 
       if (response.ok) {
         return ((await response.json()) as { property: PropertyDTO }).property;
@@ -90,31 +80,53 @@ export const propertyRouter = createTRPCRouter({
       });
     }),
 
-  getAll: publicProcedure
-    .input(
-      z.object({
-        base36Id: z.string().nullable(),
-        token: z.string().nullable(),
-      }),
-    )
+  "get-all": publicProcedure
+    .input(getAllInputSchema)
     .query(async ({ input }) => {
       const headers = new Headers();
       headers.append("Content-Type", "application/json");
-      // headers.append("Authorization", `Bearer ${token}`);
-      // Em produção usar o token aqui como env.var
-      headers.append("Authorization", `Bearer ${env.NONSTOP_TOKEN}`);
-
-      const response = await fetch(
-        `https://www.usenonstop.com/api/imoveis/todos`,
-        // `${getApiUrl()}/imoveis/${base36Id}`,
-        { headers, method: "POST", body: JSON.stringify(input) },
+      headers.append(
+        "Authorization",
+        `Bearer ${input.token ?? env.NONSTOP_TOKEN}`,
       );
+
+      const response = await fetch(`${getApiUrl()}/imoveis/todos`, {
+        headers,
+        method: "POST",
+        body: JSON.stringify(input),
+      });
 
       if (response.ok) {
         return (await response.json()) as {
           properties: TableProperty[];
           total: number;
         };
+      }
+
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Ops, houve um problema",
+      });
+    }),
+
+  "get-markers": publicProcedure
+    .input(getAllInputSchema)
+    .query(async ({ input }) => {
+      const headers = new Headers();
+      headers.append("Content-Type", "application/json");
+      headers.append(
+        "Authorization",
+        `Bearer ${input.token ?? env.NONSTOP_TOKEN}`,
+      );
+
+      const response = await fetch(`${getApiUrl()}/imoveis/markers`, {
+        headers,
+        method: "POST",
+        body: JSON.stringify(input),
+      });
+
+      if (response.ok) {
+        return ((await response.json()) as { markers: Marker[] }).markers;
       }
 
       throw new TRPCError({

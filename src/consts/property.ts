@@ -1,3 +1,10 @@
+import type {
+  AcceptsFilter,
+  FilterFace,
+  MinMax,
+  TransactionStatus,
+} from "~/types/property";
+
 export const RESIDENTIAL_TYPE_WITH_LABEL = [
   { value: "TERRENO_RESIDENCIAL", label: "Terreno residencial" },
   { value: "APARTAMENTO_GARDEN", label: "Apartamento garden" },
@@ -337,16 +344,30 @@ export const INITIAL_GOOGLE_MAPS_OPTION: Partial<google.maps.MapOptions> = {
 
 export const PROPERTY_SORT = [
   "_id",
-  "user_name",
+  "user.name",
   "type",
-  "address_street",
-  "address_area",
-  "values_sale",
+  "address.street",
+  "address.area",
+  "values.sale",
   "valuePerSquareMeter",
-  "values_longStay",
+  "values.longStay",
   "zapRating",
   "transactionStatus",
 ] as const;
+
+export const PROPERTY_SORT_OPTIONS = [
+  {
+    [`user.name`]: "Gestor",
+    type: "Tipo",
+    [`address.street`]: "Endereço",
+    [`address.area`]: "Bairro",
+    [`values.sale`]: "Venda",
+    valuePerSquareMeter: "R$/m²",
+    [`values.longStay`]: "Locação",
+    zapRating: "Nota ZAP",
+    transactionStatus: "Status",
+  },
+];
 
 export const MANAGED_BY = [
   "MIM_EXCLUSIVOS",
@@ -354,6 +375,20 @@ export const MANAGED_BY = [
   "IMOBILIARIA_EXCLUSIVOS",
   "IMOBILIARIA_NAO_EXCLUSIVOS",
   "PARCEIROS",
+] as const;
+
+export const MANAGED_BY_WITH_LABEL = [
+  { value: "MIM_EXCLUSIVOS", label: "Mim (exclusivos)" },
+  { value: "MIM_NAO_EXCLUSIVOS", label: "Mim (não exclusivos)" },
+  {
+    value: "IMOBILIARIA_EXCLUSIVOS",
+    label: "Imobiliária (exclusivos)",
+  },
+  {
+    value: "IMOBILIARIA_NAO_EXCLUSIVOS",
+    label: "Imobiliária (não exclusivos)",
+  },
+  { value: "PARCEIROS", label: "Parceiros" },
 ] as const;
 
 export const PROPERTY_USE = ["COMERCIAL", "RESIDENCIAL"] as const;
@@ -393,12 +428,28 @@ export const PROPERTY_STATUS = [
   "PADRAO",
 ] as const;
 
+export const PROPERTY_STATUS_WITH_LABEL = [
+  { value: "LANCAMENTO", label: "Lançamento" },
+  { value: "CONSTRUCAO", label: "Construção" },
+  { value: "REFORMA", label: "Reforma" },
+  { value: "NOVO", label: "Novo" },
+  { value: "PADRAO", label: "Padrão" },
+] as const;
+
 export const TRANSACTION_STATUS = [
   "SEM_OBSERVACOES",
   "EM_NEGOCIACAO",
   "VENDIDO",
   "ALUGADO",
   "BAIXOU_PRECO",
+] as const;
+
+export const TRANSACTION_STATUS_WITH_LABEL = [
+  { value: "SEM_OBSERVACOES", label: "Sem observações" },
+  { value: "EM_NEGOCIACAO", label: "Em negociação" },
+  { value: "VENDIDO", label: "Vendido" },
+  { value: "ALUGADO", label: "Alugado" },
+  { value: "BAIXOU_PRECO", label: "Baixou preço" },
 ] as const;
 
 export const FILTER_AVAILABLE_FOR = [
@@ -408,10 +459,23 @@ export const FILTER_AVAILABLE_FOR = [
   "INDISPONIVEL",
 ] as const;
 
+export const FILTER_AVAILABLE_FOR_WITH_LABEL = [
+  { value: "VENDA", label: "Somente venda" },
+  { value: "LOCACAO", label: "Somente locação" },
+  { value: "VENDA_E_LOCACAO", label: "Venda e locação" },
+  { value: "INDISPONIVEL", label: "Indisponível" },
+] as const;
+
 export const FILTER_ACCEPTS = [
   "PERMUTA",
   "FINANCIAMENTO",
   "INDIFERENTE",
+] as const;
+
+export const FILTER_ACCEPTS_WITH_LABEL = [
+  { value: "PERMUTA", label: "Permuta" },
+  { value: "FINANCIAMENTO", label: "Financiamento" },
+  { value: "INDIFERENTE", label: "Indiferente" },
 ] as const;
 
 export const FILTER_FACE = [
@@ -425,3 +489,63 @@ export const FILTER_FACE = [
   "NW",
   "ANY",
 ] as const;
+
+export const FILTER_FACE_WITH_LABEL = [
+  { value: "N", label: "Norte" },
+  { value: "NE", label: "Nordeste" },
+  { value: "E", label: "Leste" },
+  { value: "SE", label: "Sudeste" },
+  { value: "S", label: "Sul" },
+  { value: "SW", label: "Sudoeste" },
+  { value: "W", label: "Oeste" },
+  { value: "NW", label: "Noroeste" },
+  { value: "ANY", label: "Indiferente" },
+] as const;
+
+export const AGENT_MANAGED_BY = [
+  "MIM_EXCLUSIVOS",
+  "MIM_NAO_EXCLUSIVOS",
+  "PARCEIROS",
+] as const;
+
+export const AGENT_MANAGED_BY_WITH_LABEL = [
+  { value: "MIM_EXCLUSIVOS", label: "Mim (exclusivos)" },
+  { value: "MIM_NAO_EXCLUSIVOS", label: "Mim (não exclusivos)" },
+  {
+    value: "IMOBILIARIA_EXCLUSIVOS",
+    label: "Imobiliária (exclusivos)",
+  },
+  {
+    value: "IMOBILIARIA_NAO_EXCLUSIVOS",
+    label: "Imobiliária (não exclusivos)",
+  },
+  { value: "PARCEIROS", label: "Parceiros" },
+] as const;
+
+export const INITIAL_PROPERTY_FILTER = {
+  use: [...PROPERTY_USE],
+  managedBy: [...AGENT_MANAGED_BY],
+  residentialTypes: [...RESIDENTIAL_TYPE],
+  commercialTypes: [...COMMERCIAL_TYPE],
+  status: [...PROPERTY_STATUS],
+  transactionStatus: ["SEM_OBSERVACOES", "BAIXOU_PRECO"] as TransactionStatus[],
+  availableFor: [...FILTER_AVAILABLE_FOR],
+  accepts: ["INDIFERENTE"] as AcceptsFilter[],
+  values: {
+    sale: { min: null, max: null } as MinMax,
+    longStay: { min: null, max: null } as MinMax,
+    propertyTax: { min: null, max: null } as MinMax,
+    condoFee: { min: null, max: null } as MinMax,
+  },
+  areas: {
+    useful: { min: null, max: null } as MinMax,
+    land: { min: null, max: null } as MinMax,
+  },
+  face: ["ANY"] as FilterFace[],
+  floor: { min: null, max: null } as MinMax,
+  zapRating: { min: null, max: null } as MinMax,
+  minBaths: null as number | null,
+  minRooms: null as number | null,
+  minSuites: null as number | null,
+  minParkingLots: null as number | null,
+};
