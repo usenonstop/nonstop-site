@@ -14,6 +14,7 @@ const ToastViewport = React.forwardRef<
     {...props}
   />
 ));
+ToastViewport.displayName = ToastPrimitives.Viewport.displayName;
 
 const Toast = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Root>,
@@ -21,6 +22,7 @@ const Toast = React.forwardRef<
 >(({ className, ...props }, ref) => {
   return <ToastPrimitives.Root ref={ref} className={className} {...props} />;
 });
+Toast.displayName = ToastPrimitives.Root.displayName;
 
 const ToastAction = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Action>,
@@ -32,6 +34,7 @@ const ToastAction = React.forwardRef<
     {...props}
   />
 ));
+ToastAction.displayName = ToastPrimitives.Action.displayName;
 
 const ToastClose = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Close>,
@@ -46,6 +49,7 @@ const ToastClose = React.forwardRef<
     <Cross2Icon className="h-4 w-4" />
   </ToastPrimitives.Close>
 ));
+ToastClose.displayName = ToastPrimitives.Close.displayName;
 
 const ToastTitle = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Title>,
@@ -57,6 +61,7 @@ const ToastTitle = React.forwardRef<
     {...props}
   />
 ));
+ToastTitle.displayName = ToastPrimitives.Title.displayName;
 
 const ToastDescription = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Description>,
@@ -68,6 +73,7 @@ const ToastDescription = React.forwardRef<
     {...props}
   />
 ));
+ToastDescription.displayName = ToastPrimitives.Description.displayName;
 
 type ToastProps = React.ComponentPropsWithoutRef<typeof Toast>;
 

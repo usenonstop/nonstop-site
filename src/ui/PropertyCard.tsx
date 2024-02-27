@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import router from "next/router";
 import { BiArea, BiCar } from "react-icons/bi";
 import { FaBath, FaBed } from "react-icons/fa";
 
@@ -14,8 +14,8 @@ export const PropertyCard = ({
   withAvatar?: boolean;
 }) => {
   return (
-    <Link
-      href={`/imovel/${p.base36Id}`}
+    <button
+      onClick={() => router.push(`/imovel/${p.base36Id}`)}
       className="relative h-[500px] w-80 overflow-hidden rounded-lg border shadow-lg shadow-gray-400"
     >
       {withAvatar && (
@@ -27,7 +27,7 @@ export const PropertyCard = ({
         }
         alt="Imagem do imóvel"
         fill
-        sizes="320px"
+        sizes="756px"
         className="object-cover"
       />
       <div className="absolute bottom-0 flex h-52 w-full flex-col justify-between bg-black/80 p-4 text-lg text-gray-200">
@@ -76,6 +76,6 @@ export const PropertyCard = ({
           </div>
         </div>
       </div>
-    </Link>
+    </button>
   );
 };
