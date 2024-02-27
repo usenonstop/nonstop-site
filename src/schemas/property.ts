@@ -66,3 +66,18 @@ export const getAllInputSchema = z.object({
   filters: propertyFilterSchema,
   perimeters: z.string().array(),
 });
+
+const mapBoundsSchema = z.object({
+  NE: locationSchema,
+  SW: locationSchema,
+});
+
+export const getMarkersInputSchema = z.object({
+  token: z.string().nullish(),
+  zoom: z.number(),
+  bounds: mapBoundsSchema,
+  search: z.string(),
+  selectedProperties: locationSchema.array(),
+  filters: propertyFilterSchema,
+  perimeters: z.string().array(),
+});

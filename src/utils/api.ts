@@ -18,7 +18,8 @@ const getBaseUrl = () => {
 };
 
 export const getApiUrl = () => {
-  if (process.env.SERVER === "local") return `http://localhost:3001/api`;
+  // if (process.env.NODE_ENV === "development")
+  //   return `http://localhost:3001/api`;
   return "https://www.usenonstop.com/api";
 };
 

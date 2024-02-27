@@ -295,7 +295,10 @@ export const PropertyPage = ({
           <div className="text-lg font-medium">Gestor responsável</div>
           <div className="flex items-end gap-2">
             <div className="w-20">
-              <Avatar src={property.user.profileImage} />
+              <Avatar
+                href={`/agente/${property.user.slug}`}
+                src={property.user.profileImage}
+              />
             </div>
             <div>
               <div

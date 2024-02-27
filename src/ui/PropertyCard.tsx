@@ -18,7 +18,9 @@ export const PropertyCard = ({
       href={`/imovel/${p.base36Id}`}
       className="relative h-[500px] w-80 overflow-hidden rounded-lg border shadow-lg shadow-gray-400"
     >
-      {withAvatar && <Avatar src={p.user.profileImage} />}
+      {withAvatar && (
+        <Avatar href={`/agente/${p.user.slug}`} src={p.user.profileImage} />
+      )}
       <Image
         src={
           p.image ?? "https://www.usenonstop.com/images/image-placeholder.webp"

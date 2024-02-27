@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { env } from "~/env";
-import { getAllInputSchema } from "~/schemas/property";
+import { getAllInputSchema, getMarkersInputSchema } from "~/schemas/property";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import type {
   CardProperty,
@@ -110,7 +110,7 @@ export const propertyRouter = createTRPCRouter({
     }),
 
   "get-markers": publicProcedure
-    .input(getAllInputSchema)
+    .input(getMarkersInputSchema)
     .query(async ({ input }) => {
       const headers = new Headers();
       headers.append("Content-Type", "application/json");

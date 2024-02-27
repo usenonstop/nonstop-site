@@ -451,10 +451,34 @@ export type PropertyUse = (typeof PROPERTY_USE)[number];
 
 export type Marker = {
   id: string;
-  position: {
-    lat: number;
-    lng: number;
-  };
+  position: Position;
   selected: boolean;
   size: number;
+};
+
+interface Position {
+  lat: number;
+  lng: number;
+}
+
+export type MapMarker = {
+  id: string;
+  marker: google.maps.Marker | null;
+  position: Position;
+  selected: boolean;
+  size: number;
+  listener?: google.maps.MapsEventListener;
+};
+
+export interface MarkerProperty {
+  id: string;
+  size: number;
+  selected: boolean;
+  position: Position;
+}
+
+export type onClickMarkerParams = {
+  map: google.maps.Map;
+  size: number;
+  position: MarkerProperty["position"];
 };

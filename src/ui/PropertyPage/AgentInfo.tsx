@@ -10,7 +10,10 @@ export const AgentInfo = ({ property }: { property: PropertyDTO }) => {
       <div className="sticky top-10 hidden w-96 flex-col gap-4 rounded-lg bg-white p-7 shadow-lg xl:flex">
         <div className="flex items-end gap-2">
           <div className="w-20">
-            <Avatar src={property.user.profileImage} />
+            <Avatar
+              href={`/agente/${property.user.slug}`}
+              src={property.user.profileImage}
+            />
           </div>
           <div>
             <div

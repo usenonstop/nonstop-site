@@ -1,10 +1,13 @@
 // import { useAtom } from "jotai";
-import { atom, useAtom } from "jotai";
-import { useState } from "react";
+import { useAtom } from "jotai";
+import { useEffect, useState } from "react";
 import {
-  INITIAL_PROPERTY_FILTER,
-  PROPERTY_SORT_OPTIONS,
-} from "~/consts/property";
+  propertyFilterAtom,
+  propertyPaginationAtom,
+  propertyPerimetersAtom,
+  propertySearchAtom,
+} from "~/atoms/property";
+import { PROPERTY_SORT_OPTIONS } from "~/consts/property";
 import { sortingToQuery } from "~/fns/sortingToQuery";
 import { useDebounce } from "~/hooks/useDebounce";
 import type { SortingState } from "~/types/property";
@@ -12,20 +15,13 @@ import { Header } from "~/ui/Header";
 import { MapButton } from "~/ui/MapButton";
 import { Pagination } from "~/ui/Pagination";
 import { PaginationSelect } from "~/ui/PaginationSelect";
+import { PropertiesMap } from "~/ui/PropertiesMap";
 // import { NoToken } from "~/ui/NoToken";
 import { PropertyCard } from "~/ui/PropertyCard";
 import { PropertyFilter } from "~/ui/PropertyFilter";
 import { Results } from "~/ui/Results";
 import { SortingButton } from "~/ui/SortingButton";
 import { api } from "~/utils/api";
-
-export const propertyPaginationAtom = atom({ perPage: 20, currPage: 1 });
-export const propertyPerimetersAtom = atom([]);
-export const propertyMapPolygonsAtom = atom<google.maps.Polygon[]>([]);
-export const propertyMapCreatedPolygonsAtom = atom<string[]>([]);
-export const propertyFilterAtom = atom(
-  structuredClone(INITIAL_PROPERTY_FILTER),
-);
 
 export default function Imoveis() {
   // const [token] = useAtom(tokenAtom);
@@ -36,13 +32,18 @@ export default function Imoveis() {
   const [selectedProperties] = useState([]);
   const [perimeters] = useAtom(propertyPerimetersAtom);
   const [input, setInput] = useState("");
+  const [search, setSearch] = useAtom(propertySearchAtom);
   const debouncedInput = useDebounce(input, 400);
   const debouncedFilters = useDebounce(filters, 400);
+
+  useEffect(() => {
+    setSearch(debouncedInput);
+  }, [debouncedInput, setSearch]);
 
   const { data } = api.property["get-all"].useQuery(
     {
       pagination,
-      search: debouncedInput,
+      search,
       sort: sortingToQuery(sorting),
       selectedProperties,
       filters: debouncedFilters,
@@ -88,7 +89,7 @@ export default function Imoveis() {
           perPage={pagination.perPage}
         />
       </div>
-      <div className="flex h-[calc(100vh-272px)] w-full">
+      <div className="flex h-[calc(100vh-272px)] w-full p-4">
         {!showMap && (
           <div className="h-full w-1/4 border p-4 shadow-inner shadow-gray-300">
             <input
@@ -102,7 +103,11 @@ export default function Imoveis() {
             </div>
           </div>
         )}
-        {showMap && <div className="h-full w-3/5">MAPA</div>}
+        {showMap && (
+          <div className="h-full w-3/5">
+            <PropertiesMap />
+          </div>
+        )}
         <div
           className={`${showMap ? "w-2/5" : "w-3/4"} overflow-scroll scrollbar`}
         >

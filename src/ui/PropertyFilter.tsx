@@ -23,7 +23,7 @@ import {
   propertyMapPolygonsAtom,
   propertyPaginationAtom,
   propertyPerimetersAtom,
-} from "~/pages/imoveis";
+} from "~/atoms/property";
 import {
   COMMERCIAL_TYPE,
   COMMERCIAL_TYPE_WITH_LABEL,
