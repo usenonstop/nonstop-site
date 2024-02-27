@@ -482,3 +482,5 @@ export type onClickMarkerParams = {
   size: number;
   position: MarkerProperty["position"];
 };
+
+export type StateFilter = "TODOS" | UF;

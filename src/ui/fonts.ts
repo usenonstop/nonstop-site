@@ -1,3 +1,4 @@
-import { Inter } from "next/font/google";
+import { Baloo_2, Outfit } from "next/font/google";
 
-export const inter = Inter({ subsets: ["latin"] });
+export const baloo2 = Baloo_2({ subsets: ["latin"] });
+export const outfit = Outfit({ subsets: ["latin"] });

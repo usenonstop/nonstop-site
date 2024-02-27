@@ -2,6 +2,7 @@ import type {
   AcceptsFilter,
   FilterFace,
   MinMax,
+  StateFilter,
   TransactionStatus,
 } from "~/types/property";
 
@@ -523,6 +524,8 @@ export const AGENT_MANAGED_BY_WITH_LABEL = [
 ] as const;
 
 export const INITIAL_PROPERTY_FILTER = {
+  state: "TODOS" as StateFilter,
+  city: "TODAS",
   use: [...PROPERTY_USE],
   managedBy: [...AGENT_MANAGED_BY],
   residentialTypes: [...RESIDENTIAL_TYPE],
@@ -549,3 +552,35 @@ export const INITIAL_PROPERTY_FILTER = {
   minSuites: null as number | null,
   minParkingLots: null as number | null,
 };
+
+export const UF = [
+  "AC",
+  "AL",
+  "AP",
+  "AM",
+  "BA",
+  "CE",
+  "DF",
+  "ES",
+  "GO",
+  "MA",
+  "MT",
+  "MS",
+  "MG",
+  "PA",
+  "PB",
+  "PR",
+  "PE",
+  "PI",
+  "RJ",
+  "RN",
+  "RS",
+  "RO",
+  "RR",
+  "SC",
+  "SP",
+  "SE",
+  "TO",
+] as const;
+
+export const UF_FILTER = ["TODOS", ...UF] as const;

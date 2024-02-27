@@ -8,7 +8,7 @@ import {
   propertyPerimetersAtom,
   propertySearchAtom,
 } from "~/atoms/property";
-import { PROPERTY_SORT_OPTIONS } from "~/consts/property";
+import { PROPERTY_SORT_OPTIONS, UF_FILTER } from "~/consts/property";
 import { sortingToQuery } from "~/fns/sortingToQuery";
 import { useDebounce } from "~/hooks/useDebounce";
 import type { SortingState } from "~/types/property";
@@ -22,13 +22,14 @@ import { PropertyCard } from "~/ui/PropertyCard";
 import { PropertyFilter } from "~/ui/PropertyFilter";
 import { Results } from "~/ui/Results";
 import { SortingButton } from "~/ui/SortingButton";
+import { StringSelect } from "~/ui/StringSelect";
 import { api } from "~/utils/api";
 
 export default function Imoveis() {
   // const [token] = useAtom(tokenAtom);
   const [showMap, setShowMap] = useState(false);
   const [pagination, setPagination] = useAtom(propertyPaginationAtom);
-  const [filters] = useAtom(propertyFilterAtom);
+  const [filters, setFilters] = useAtom(propertyFilterAtom);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [selectedProperties] = useAtom(propertyMapSelectedProperties);
   const [perimeters] = useAtom(propertyPerimetersAtom);
@@ -92,13 +93,21 @@ export default function Imoveis() {
       </div>
       <div className="flex h-[calc(100vh-272px)] w-full p-4">
         {!showMap && (
-          <div className="h-full w-1/4 border p-4 shadow-inner shadow-gray-300">
+          <div className="flex h-full w-1/4 flex-col gap-2 border p-4 shadow-inner shadow-gray-300">
             <input
               placeholder="Endereço, Agente, Imobiliária, Condomínio ou Código"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               className="w-full rounded border p-2"
             />
+            <div className="text-gray-700">
+              <StringSelect
+                value={filters.state}
+                onChange={(s) => setFilters((f) => ({ ...f, state: s }))}
+                name="state"
+                options={UF_FILTER}
+              />
+            </div>
             <div className="mt-6 h-[calc(100%-64px)] overflow-scroll px-2 pb-10 scrollbar">
               <PropertyFilter />
             </div>
