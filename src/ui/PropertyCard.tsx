@@ -33,7 +33,7 @@ export const PropertyCard = ({
       <div className="absolute bottom-0 flex h-52 w-full flex-col justify-between bg-black/80 p-4 text-lg text-gray-200">
         <div className="h-16 font-medium">{`${p.address.street}, ${p.address.number}`}</div>
         <div className="flex flex-col gap-2">
-          <div className="text-base">{`${p.address.area}, ${p.address.city}`}</div>
+          <div className="w-full text-left text-base">{`${p.address.area}, ${p.address.city}`}</div>
           <div className="flex gap-3 text-sm">
             <div className="flex items-center gap-1">
               <FaBed />
@@ -56,7 +56,7 @@ export const PropertyCard = ({
             </div>
           </div>
 
-          <div className="relative flex gap-4">
+          <div className="relative flex gap-4 text-left">
             {!!p.values.sale && p.transactionStatus !== "ALUGADO" && (
               <div className="text-md flex flex-col font-medium">
                 <div className="flex flex-col">
