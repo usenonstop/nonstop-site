@@ -99,7 +99,7 @@ export const PropertyMediaModal = ({
                   src={
                     firstImage
                       ? firstImage.url
-                      : "/images/image-placeholder.webp"
+                      : "https://www.usenonstop.com/images/image-placeholder.webp"
                   }
                   priority
                   sizes="100vw 

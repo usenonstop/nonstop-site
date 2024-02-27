@@ -205,7 +205,10 @@ export const HeroImage = ({
               draggable={false}
               className="hidden object-cover"
               alt={prevImage?.name ?? "Imóvel sem imagem"}
-              src={prevImage?.url ?? "/images/image-placeholder.webp"}
+              src={
+                prevImage?.url ??
+                "https://www.usenonstop.com/images/image-placeholder.webp"
+              }
               priority
               sizes="100vw 
                 (min-width: 1280px) 1200px"
@@ -215,7 +218,10 @@ export const HeroImage = ({
               draggable={false}
               className="object-cover"
               alt={firstImage?.name ?? "Imóvel sem imagem"}
-              src={firstImage?.url ?? "/images/image-placeholder.webp"}
+              src={
+                firstImage?.url ??
+                "https://www.usenonstop.com/images/image-placeholder.webp"
+              }
               priority
               sizes="100vw 
                 (min-width: 1280px) 1200px"
@@ -225,7 +231,10 @@ export const HeroImage = ({
               draggable={false}
               className="hidden object-cover"
               alt={nextImage?.name ?? "Imóvel sem imagem"}
-              src={nextImage?.url ?? "/images/image-placeholder.webp"}
+              src={
+                nextImage?.url ??
+                "https://www.usenonstop.com/images/image-placeholder.webp"
+              }
               priority
               sizes="100vw 
                 (min-width: 1280px) 1200px"

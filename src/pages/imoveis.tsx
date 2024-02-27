@@ -3,6 +3,7 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import {
   propertyFilterAtom,
+  propertyMapSelectedProperties,
   propertyPaginationAtom,
   propertyPerimetersAtom,
   propertySearchAtom,
@@ -29,7 +30,7 @@ export default function Imoveis() {
   const [pagination, setPagination] = useAtom(propertyPaginationAtom);
   const [filters] = useAtom(propertyFilterAtom);
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [selectedProperties] = useState([]);
+  const [selectedProperties] = useAtom(propertyMapSelectedProperties);
   const [perimeters] = useAtom(propertyPerimetersAtom);
   const [input, setInput] = useState("");
   const [search, setSearch] = useAtom(propertySearchAtom);
