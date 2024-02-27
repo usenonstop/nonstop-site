@@ -27,10 +27,7 @@ type PageProps = InferGetServerSidePropsType<typeof getStaticProps>;
 
 export default function Agente({ slug }: PageProps) {
   const [token] = useAtom(tokenAtom);
-  const { data: agent } = api.agent.profile.useQuery(
-    { token, slug },
-    // { enabled: !!token, },
-  );
+  const { data: agent } = api.agent.profile.useQuery({ token, slug });
 
   const facebook = agent?.socialMedias.find((s) => s.name === "Facebook")?.url;
   const instagram = agent?.socialMedias.find(
@@ -43,7 +40,7 @@ export default function Agente({ slug }: PageProps) {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
       <Header title="AGENTE" />
-      <div className="scrollbar h-[calc(100vh-208px)] w-full overflow-scroll">
+      <div className="h-[calc(100vh-208px)] w-full overflow-scroll scrollbar">
         <div className="flex flex-wrap items-center justify-center gap-4">
           {/* {!token && <NoToken />} */}
           {agent && (
@@ -156,7 +153,7 @@ export default function Agente({ slug }: PageProps) {
                     <span className="font-baloo text-2xl font-medium">
                       Sobre
                     </span>
-                    <div className="scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded-lg max-h-60 overflow-scroll pr-4 text-sm text-gray-500">
+                    <div className="max-h-60 overflow-scroll pr-4 text-sm text-gray-500 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded-lg">
                       {agent.about}
                     </div>
                   </div>
@@ -167,7 +164,7 @@ export default function Agente({ slug }: PageProps) {
                     <span className="font-baloo text-2xl font-medium">
                       Áreas de atuação
                     </span>
-                    <div className="scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded-lg flex max-h-36 flex-wrap gap-3 overflow-scroll pr-4 text-sm text-gray-500">
+                    <div className="flex max-h-36 flex-wrap gap-3 overflow-scroll pr-4 text-sm text-gray-500 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded-lg">
                       {agent.actuationAreas.map((a) => (
                         <div
                           className="h-fit rounded-lg border p-2 shadow"
@@ -185,7 +182,7 @@ export default function Agente({ slug }: PageProps) {
                     <span className="font-baloo text-2xl font-medium">
                       Regras de parceria
                     </span>
-                    <div className="scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded-lg flex max-h-60 flex-wrap gap-3 overflow-scroll whitespace-pre-wrap pr-4 text-sm text-gray-500">
+                    <div className="flex max-h-60 flex-wrap gap-3 overflow-scroll whitespace-pre-wrap pr-4 text-sm text-gray-500 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded-lg">
                       {agent.partnershipRules}
                     </div>
                   </div>

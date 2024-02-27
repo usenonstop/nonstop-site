@@ -1,4 +1,3 @@
-// import { useAtom } from "jotai";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import {
@@ -8,11 +7,11 @@ import {
   propertyPerimetersAtom,
   propertySearchAtom,
 } from "~/atoms/property";
-import { PROPERTY_SORT_OPTIONS, UF_FILTER } from "~/consts/property";
+import { PROPERTY_SORT_OPTIONS } from "~/consts/property";
 import { sortingToQuery } from "~/fns/sortingToQuery";
 import { useDebounce } from "~/hooks/useDebounce";
 import type { SortingState } from "~/types/property";
-import { Header } from "~/ui/Header";
+import { Header, tokenAtom } from "~/ui/Header";
 import { MapButton } from "~/ui/MapButton";
 import { Pagination } from "~/ui/Pagination";
 import { PaginationSelect } from "~/ui/PaginationSelect";
@@ -22,11 +21,12 @@ import { PropertyCard } from "~/ui/PropertyCard";
 import { PropertyFilter } from "~/ui/PropertyFilter";
 import { Results } from "~/ui/Results";
 import { SortingButton } from "~/ui/SortingButton";
-import { StringSelect } from "~/ui/StringSelect";
+import { Select } from "~/ui/Select";
 import { api } from "~/utils/api";
+// import { Autocomplete } from "~/ui/Autocomplete";
 
 export default function Imoveis() {
-  // const [token] = useAtom(tokenAtom);
+  const [token] = useAtom(tokenAtom);
   const [showMap, setShowMap] = useState(false);
   const [pagination, setPagination] = useAtom(propertyPaginationAtom);
   const [filters, setFilters] = useAtom(propertyFilterAtom);
@@ -42,17 +42,17 @@ export default function Imoveis() {
     setSearch(debouncedInput);
   }, [debouncedInput, setSearch]);
 
-  const { data } = api.property["get-all"].useQuery(
-    {
-      pagination,
-      search,
-      sort: sortingToQuery(sorting),
-      selectedProperties,
-      filters: debouncedFilters,
-      perimeters,
-    },
-    // { enabled: !!token },
-  );
+  const { data } = api.property["get-all"].useQuery({
+    token,
+    pagination,
+    search,
+    sort: sortingToQuery(sorting),
+    selectedProperties,
+    filters: debouncedFilters,
+    perimeters,
+  });
+
+  const { data: states } = api.property["get-states"].useQuery(token);
 
   const properties = data?.properties ?? [];
   const total = data?.total ?? 0;
@@ -101,12 +101,23 @@ export default function Imoveis() {
               className="w-full rounded border p-2"
             />
             <div className="text-gray-700">
-              <StringSelect
+              <Select
+                label="UF"
                 value={filters.state}
                 onChange={(s) => setFilters((f) => ({ ...f, state: s }))}
                 name="state"
-                options={UF_FILTER}
+                options={states ?? []}
               />
+              {/* <Autocomplete */}
+              {/*   name="city" */}
+              {/*   isLoading={true} */}
+              {/*   onClose={() => handleChangeCity(null, value.state)} */}
+              {/*   options={cities ?? []} */}
+              {/*   onChange={(city) => handleChangeCity(city, value.state)} */}
+              {/*   onChangeInput={(i) => setQuery(i)} */}
+              {/*   value={value.city} */}
+              {/*   label="Cidade" */}
+              {/* /> */}
             </div>
             <div className="mt-6 h-[calc(100%-64px)] overflow-scroll px-2 pb-10 scrollbar">
               <PropertyFilter />

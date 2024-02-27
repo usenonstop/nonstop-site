@@ -6,9 +6,7 @@ import { api } from "~/utils/api";
 
 export default function Destaques() {
   const [token] = useAtom(tokenAtom);
-  const { data: properties } = api.property["get-highlight"].useQuery(token, {
-    // enabled: !!token,
-  });
+  const { data: properties } = api.property["get-highlight"].useQuery(token);
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">

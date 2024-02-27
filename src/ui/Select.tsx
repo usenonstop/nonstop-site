@@ -2,7 +2,7 @@ import { Listbox } from "@headlessui/react";
 import { FaChevronDown } from "react-icons/fa";
 import { Spinner } from "~/ui/Spinner";
 
-export const StringSelect = <T extends string>({
+export const Select = <T extends string>({
   label,
   options,
   name,

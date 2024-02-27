@@ -10,10 +10,7 @@ export default function Agentes() {
   const [token] = useAtom(tokenAtom);
   const [pagination, setPagination] = useState({ currPage: 1, perPage: 5 });
   const { currPage, perPage } = pagination;
-  const { data } = api.agent.get.useQuery(
-    { token, currPage, perPage },
-    // { enabled: !!token },
-  );
+  const { data } = api.agent.get.useQuery({ token, currPage, perPage });
 
   const agents = data?.agents ?? [];
   const total = data?.total ?? 0;

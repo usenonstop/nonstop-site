@@ -13,10 +13,7 @@ type PageProps = InferGetServerSidePropsType<typeof getStaticProps>;
 
 export default function Imovel({ base36Id }: PageProps) {
   const [token] = useAtom(tokenAtom);
-  const { data: property } = api.property.get.useQuery(
-    { token, base36Id },
-    // { enabled: !!token },
-  );
+  const { data: property } = api.property.get.useQuery({ token, base36Id });
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">

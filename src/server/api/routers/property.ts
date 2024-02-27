@@ -8,6 +8,7 @@ import type {
   Marker,
   PropertyDTO,
   TableProperty,
+  UF,
 } from "~/types/property";
 import { getApiUrl } from "~/utils/api";
 
@@ -127,6 +128,27 @@ export const propertyRouter = createTRPCRouter({
 
       if (response.ok) {
         return ((await response.json()) as { markers: Marker[] }).markers;
+      }
+
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Ops, houve um problema",
+      });
+    }),
+
+  "get-states": publicProcedure
+    .input(z.string().nullish())
+    .query(async ({ input: token }) => {
+      const headers = new Headers();
+      headers.append("Content-Type", "application/json");
+      headers.append("Authorization", `Bearer ${token ?? env.NONSTOP_TOKEN}`);
+
+      const response = await fetch(`${getApiUrl()}/imoveis/estados/`, {
+        headers,
+      });
+
+      if (response.ok) {
+        return ((await response.json()) as { states: UF[] }).states;
       }
 
       throw new TRPCError({
