@@ -2,8 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { env } from "~/env";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import type { ProfileAgent } from "~/types/agent";
-import type { CardCondo } from "~/types/condo";
+import type { CardCondo, CondoDTO } from "~/types/condo";
 import { getApiUrl } from "~/utils/api";
 
 export const condoRouter = createTRPCRouter({
@@ -39,18 +38,18 @@ export const condoRouter = createTRPCRouter({
     }),
 
   get: publicProcedure
-    .input(z.object({ token: z.string().nullish(), slug: z.string() }))
-    .query(async ({ input: { slug, token } }) => {
+    .input(z.object({ token: z.string().nullish(), id: z.string() }))
+    .query(async ({ input: { id, token } }) => {
       const headers = new Headers();
       headers.append("Content-Type", "application/json");
       headers.append("Authorization", `Bearer ${token ?? env.NONSTOP_TOKEN}`);
 
-      const response = await fetch(`${getApiUrl()}/agentes/${slug}`, {
+      const response = await fetch(`${getApiUrl()}/condominios/${id}`, {
         headers,
       });
 
       if (response.ok) {
-        return ((await response.json()) as { agent: ProfileAgent }).agent;
+        return ((await response.json()) as { condo: CondoDTO }).condo;
       }
 
       throw new TRPCError({

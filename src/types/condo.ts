@@ -81,6 +81,12 @@ export interface CondoDTO {
   features: CondoFeature[];
   media: Media;
   user: UserEmbed;
+  rooms: MinMax;
+  baths: MinMax;
+  parkingLots: MinMax;
+  areas: MinMax;
+  sale: MinMax;
+  longStay: MinMax;
 }
 
 export interface CardCondo {

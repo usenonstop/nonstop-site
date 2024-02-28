@@ -64,25 +64,6 @@ export const CondoCard = ({ condo: c }: { condo: CardCondo }) => {
               </div>
             )}
           </div>
-
-          {/* <div className="relative flex gap-4 text-left"> */}
-          {/*   {!!p.values.sale && p.transactionStatus !== "ALUGADO" && ( */}
-          {/*     <div className="text-md flex flex-col font-medium"> */}
-          {/*       <div className="flex flex-col"> */}
-          {/*         <span>R$ {p.values.sale.toLocaleString()}</span> */}
-          {/*         <span className="-mt-1 text-sm">Venda</span> */}
-          {/*       </div> */}
-          {/*     </div> */}
-          {/*   )} */}
-          {/*   {!!p.values.longStay && p.transactionStatus !== "VENDIDO" && ( */}
-          {/*     <div className="text-md flex flex-col font-medium"> */}
-          {/*       <div className="flex flex-col"> */}
-          {/*         <span>R$ {p.values.longStay.toLocaleString()}</span> */}
-          {/*         <span className="-mt-1 text-sm">Locação</span> */}
-          {/*       </div> */}
-          {/*     </div> */}
-          {/*   )} */}
-          {/* </div> */}
         </div>
       </div>
     </button>
