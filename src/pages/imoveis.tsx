@@ -112,7 +112,7 @@ export default function Imoveis() {
             />
             <div className="flex flex-col gap-2 text-gray-700">
               <Select
-                label="UF"
+                label="Estado"
                 value={filters.state}
                 onChange={(s) => setFilters((f) => ({ ...f, state: s }))}
                 name="state"

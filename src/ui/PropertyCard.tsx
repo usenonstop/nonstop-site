@@ -2,6 +2,7 @@ import Image from "next/image";
 import router from "next/router";
 import { BiArea, BiCar } from "react-icons/bi";
 import { FaBath, FaBed } from "react-icons/fa";
+import { createAddressString } from "~/fns/createAddressString";
 
 import type { CardProperty } from "~/types/property";
 import { Avatar } from "~/ui/Avatar";
@@ -31,10 +32,10 @@ export const PropertyCard = ({
         className="object-cover"
       />
       <div className="absolute bottom-0 flex h-52 w-full flex-col justify-between bg-black/80 p-4 text-lg text-gray-200">
-        <div className="h-16 font-medium">{`${p.address.street}, ${p.address.number}`}</div>
+        <div className="h-16 font-medium">{createAddressString(p.address)}</div>
         <div className="flex flex-col gap-2">
           <div className="w-full text-left text-base">{`${p.address.area}, ${p.address.city}`}</div>
-          <div className="flex gap-3 text-sm">
+          <div className="flex gap-4 text-sm">
             <div className="flex items-center gap-1">
               <FaBed />
               {p.rooms}

@@ -234,7 +234,7 @@ export interface MediaFile {
   url: string;
 }
 
-interface Media {
+export interface Media {
   images: MediaFile[];
   floorPlans: MediaFile[];
   promotionalFiles: MediaFile[];

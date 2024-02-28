@@ -20,6 +20,9 @@ export const Header = ({ title }: { title: string }) => {
         <Link className="underline" href="/imoveis">
           Imóveis
         </Link>
+        <Link className="underline" href="/condominios">
+          Condomínios
+        </Link>
         <Link className="underline" href="/agentes">
           Agentes
         </Link>

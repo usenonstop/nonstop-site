@@ -9,7 +9,7 @@ export const createAddressString = (
 ) => {
   if (!a) return "-";
   if (!a.street) return "-";
-  let newAddress = `${a.street}`;
+  let newAddress = `${a.street.replace(/avenida/gi, "Av").replace(/alameda/gi, "Al")}`;
   fields.map((f) => {
     const value = a[f];
     if (value && typeof value === "string")
