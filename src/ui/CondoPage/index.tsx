@@ -13,8 +13,16 @@ import { MediaButtons } from "~/ui/CondoPage/MediaButtons";
 import { PropertyMap } from "~/ui/PropertyPage/PropertyMap";
 import { PropertyValue } from "~/ui/PropertyPage/PropertyValue";
 import { CONDO_FEATURE_WITH_LABEL } from "~/consts/property";
+import { Portfolio } from "~/ui/Portfolio";
+import { atom, useAtom } from "jotai";
+import { api } from "~/utils/api";
+import { tokenAtom } from "~/ui/Header";
+
+const availablePaginationAtom = atom({ currPage: 1, perPage: 5 });
+const soldPaginationAtom = atom({ currPage: 1, perPage: 5 });
 
 export const CondoPage = ({ condo }: { condo: CondoDTO }) => {
+  const [token] = useAtom(tokenAtom);
   const coordinates = condo.address.geo.coordinates;
   const lat = coordinates[0];
   const lng = coordinates[1];
@@ -22,6 +30,28 @@ export const CondoPage = ({ condo }: { condo: CondoDTO }) => {
   const managerEmail = condo.user.corporateEmail
     ? condo.user.corporateEmail
     : condo.user.email;
+
+  const [availablePagination] = useAtom(availablePaginationAtom);
+  const { data: profile } = api.condo.portfolio.useQuery({
+    token,
+    currPage: availablePagination.currPage,
+    perPage: availablePagination.perPage,
+    id: condo.id,
+  });
+
+  const availableProperties = profile?.properties ?? [];
+  const availableTotal = profile?.total ?? 0;
+
+  const [soldPagination] = useAtom(soldPaginationAtom);
+  const { data: sold } = api.condo["sold-portfolio"].useQuery({
+    token,
+    currPage: soldPagination.currPage,
+    perPage: soldPagination.perPage,
+    id: condo.id,
+  });
+
+  const soldProperties = sold?.properties ?? [];
+  const soldTotal = sold?.total ?? 0;
 
   return (
     <div className="flex w-full max-w-7xl flex-col items-center justify-center pb-20">
@@ -223,6 +253,34 @@ export const CondoPage = ({ condo }: { condo: CondoDTO }) => {
               <PropertyMap zoom={15} center={{ lat, lng }} />
             </div>
           </div>
+        )}
+
+        {availableTotal > 0 && (
+          <>
+            <h1 className="flex h-48 items-center justify-center text-5xl">
+              À VENDA
+            </h1>
+
+            <Portfolio
+              paginationAtom={availablePaginationAtom}
+              properties={availableProperties}
+              total={availableTotal}
+            />
+          </>
+        )}
+
+        {soldTotal > 0 && (
+          <>
+            <h1 className="flex h-48 items-center justify-center text-5xl">
+              VENDIDOS
+            </h1>
+
+            <Portfolio
+              paginationAtom={soldPaginationAtom}
+              properties={soldProperties}
+              total={soldTotal}
+            />
+          </>
         )}
       </div>
     </div>

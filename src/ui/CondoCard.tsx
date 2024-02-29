@@ -21,12 +21,12 @@ export const CondoCard = ({ condo: c }: { condo: CardCondo }) => {
         sizes="756px"
         className="object-cover"
       />
-      <div className="absolute bottom-0 flex h-52 w-full flex-col justify-between bg-black/80 p-4 text-lg text-gray-200">
-        <div className="text-xl font-medium">{c.name}</div>
-        <div className="mt-auto flex flex-col gap-2 text-left">
-          <div className="">{createAddressString(c.address)}</div>
+      <div className="absolute bottom-0 flex h-52 w-full flex-col justify-between gap-3 bg-black/80 p-4 text-lg text-gray-200">
+        <div className="min-h-14 text-xl font-medium">{c.name}</div>
+        <div className="flex h-full flex-col gap-2 text-left">
+          <div>{createAddressString(c.address)}</div>
           <div className="w-full text-left text-base">{`${c.address.area}, ${c.address.city}`}</div>
-          <div className="flex h-11 flex-wrap gap-x-5 gap-y-1 text-sm">
+          <div className="mt-auto flex flex-wrap gap-x-5 gap-y-1 text-sm">
             {c.type !== "COMERCIAL" && c.rooms.min && c.rooms.max && (
               <div className="flex items-center gap-1">
                 <FaBed />

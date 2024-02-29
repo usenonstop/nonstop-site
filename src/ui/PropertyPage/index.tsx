@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { BiArea, BiCar } from "react-icons/bi";
 import { FaBath, FaBed, FaBuilding, FaPhone, FaWhatsapp } from "react-icons/fa";
 import { FiShare2 } from "react-icons/fi";
@@ -259,10 +260,13 @@ export const PropertyPage = ({
               <div className="flex flex-col gap-2">
                 <div className="text-lg font-medium">Condomínio</div>
 
-                <div className="flex items-center gap-4 rounded-lg border p-4 text-sm text-gray-600">
+                <Link
+                  href={`/condominio/${property.condo.id}`}
+                  className="flex items-center gap-4 rounded-lg border p-4 text-sm text-gray-600"
+                >
                   <FaBuilding />
                   <span>{property.condo.name}</span>
-                </div>
+                </Link>
               </div>
             )}
 
