@@ -18,9 +18,9 @@ const getBaseUrl = () => {
 };
 
 export const getApiUrl = () => {
-  // if (process.env.NODE_ENV === "development")
-  return `http://localhost:3001/api/unstable`;
-  // return "https://www.usenonstop.com/api/unstable";
+  if (process.env.NODE_ENV === "development")
+    return `http://localhost:3001/api/unstable`;
+  return "https://www.usenonstop.com/api/unstable";
 };
 
 /** A set of type-safe react-query hooks for your tRPC API. */
