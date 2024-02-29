@@ -40,7 +40,7 @@ export const CondoPage = ({ condo }: { condo: CondoDTO }) => {
                   <span>
                     {formatPrice(applyIntMask(condo.sale.min))}
                     {condo.sale.max && condo.sale.max > condo.sale.min
-                      ? " - " + applyIntMask(condo.sale.max)
+                      ? " - R$ " + applyIntMask(condo.sale.max)
                       : ""}
                   </span>
                   <span className="-mt-1 text-xs text-gray-600">Venda</span>
@@ -52,7 +52,7 @@ export const CondoPage = ({ condo }: { condo: CondoDTO }) => {
                     {formatPrice(applyIntMask(condo.longStay.min))}
                     {condo.longStay.max &&
                     condo.longStay.max > condo.longStay.min
-                      ? " - " + applyIntMask(condo.longStay.max)
+                      ? " - R$ " + applyIntMask(condo.longStay.max)
                       : ""}
                   </span>
                   <span className="-mt-1 text-xs text-gray-600">Locação</span>
@@ -63,10 +63,12 @@ export const CondoPage = ({ condo }: { condo: CondoDTO }) => {
         )}
 
         <div className="flex w-full gap-5 text-gray-500">
-          <IconValue
-            icon={<FaBed />}
-            value={`${condo.rooms.min}${condo.rooms.max !== condo.rooms.min ? ` - ${condo.rooms.max}` : ""}`}
-          />
+          {condo.rooms.min && (
+            <IconValue
+              icon={<FaBed />}
+              value={`${condo.rooms.min}${condo.rooms.max !== condo.rooms.min ? ` - ${condo.rooms.max}` : ""}`}
+            />
+          )}
           <IconValue
             icon={<FaBath />}
             value={`${condo.baths.min}${

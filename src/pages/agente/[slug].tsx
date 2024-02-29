@@ -1,4 +1,4 @@
-import { useAtom } from "jotai";
+import { atom, useAtom } from "jotai";
 import Image from "next/image";
 import type {
   GetStaticPaths,
@@ -21,13 +21,40 @@ import { MdOutlineEmail } from "react-icons/md";
 import { AiOutlinePhone } from "react-icons/ai";
 import { RiWhatsappLine } from "react-icons/ri";
 import { Flag } from "~/ui/Flag";
-import { AgentPortfolio } from "~/ui/AgentPortfolio";
+import { Portfolio } from "~/ui/Portfolio";
 
 type PageProps = InferGetServerSidePropsType<typeof getStaticProps>;
+
+const profilePaginationAtom = atom({ currPage: 1, perPage: 5 });
+const soldPaginationAtom = atom({ currPage: 1, perPage: 5 });
 
 export default function Agente({ slug }: PageProps) {
   const [token] = useAtom(tokenAtom);
   const { data: agent } = api.agent.profile.useQuery({ token, slug });
+
+  const [profilePagination] = useAtom(profilePaginationAtom);
+  const { data: profile } = api.agent.portfolio.useQuery({
+    token,
+    currPage: profilePagination.currPage,
+    perPage: profilePagination.perPage,
+    slug,
+    sold: false,
+  });
+
+  const profileProperties = profile?.properties ?? [];
+  const profileTotal = profile?.total ?? 0;
+
+  const [soldPagination] = useAtom(soldPaginationAtom);
+  const { data: sold } = api.agent.portfolio.useQuery({
+    token,
+    currPage: soldPagination.currPage,
+    perPage: soldPagination.perPage,
+    slug,
+    sold: true,
+  });
+
+  const soldProperties = sold?.properties ?? [];
+  const soldTotal = sold?.total ?? 0;
 
   const facebook = agent?.socialMedias.find((s) => s.name === "Facebook")?.url;
   const instagram = agent?.socialMedias.find(
@@ -219,13 +246,21 @@ export default function Agente({ slug }: PageProps) {
         PORTFOLIO
       </h1>
 
-      <AgentPortfolio slug={slug} sold={false} />
+      <Portfolio
+        paginationAtom={profilePaginationAtom}
+        properties={profileProperties}
+        total={profileTotal}
+      />
 
       <h1 className="flex h-48 items-center justify-center text-5xl">
         VENDIDOS
       </h1>
 
-      <AgentPortfolio slug={slug} sold={true} />
+      <Portfolio
+        paginationAtom={soldPaginationAtom}
+        properties={soldProperties}
+        total={soldTotal}
+      />
     </div>
   );
 }

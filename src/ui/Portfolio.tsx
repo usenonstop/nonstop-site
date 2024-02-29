@@ -1,32 +1,19 @@
-import { useAtom } from "jotai";
-import { useState } from "react";
-import { tokenAtom } from "~/ui/Header";
 // import { NoToken } from "~/ui/NoToken";
-import { Pagination } from "~/ui/Pagination";
+import { useAtom, type PrimitiveAtom } from "jotai";
+import type { CardProperty } from "~/types/property";
+import { Pagination, type PaginationType } from "~/ui/Pagination";
 import { PropertyCard } from "~/ui/PropertyCard";
-import { api } from "~/utils/api";
 
-export const AgentPortfolio = ({
-  slug,
-  sold,
+export const Portfolio = ({
+  properties,
+  total,
+  paginationAtom,
 }: {
-  slug: string;
-  sold: boolean;
+  properties: CardProperty[];
+  total: number;
+  paginationAtom: PrimitiveAtom<PaginationType>;
 }) => {
-  const [token] = useAtom(tokenAtom);
-  const [pagination, setPagination] = useState({ currPage: 1, perPage: 5 });
-  const { currPage, perPage } = pagination;
-  const { data } = api.agent.portfolio.useQuery({
-    token,
-    currPage,
-    perPage,
-    slug,
-    sold,
-  });
-
-  const properties = data?.properties ?? [];
-  const total = data?.total ?? 0;
-
+  const [pagination, setPagination] = useAtom(paginationAtom);
   return (
     <div className="flex h-[calc(100vh-208px)] w-full flex-col items-center gap-8 overflow-scroll scrollbar">
       <div className="flex flex-wrap items-center justify-center gap-4">
