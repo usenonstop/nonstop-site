@@ -525,7 +525,7 @@ export const AGENT_MANAGED_BY_WITH_LABEL = [
 
 export const INITIAL_PROPERTY_FILTER = {
   state: "TODOS" as StateFilter,
-  city: "TODAS",
+  city: null as string | null,
   use: [...PROPERTY_USE],
   managedBy: [...AGENT_MANAGED_BY],
   residentialTypes: [...RESIDENTIAL_TYPE],

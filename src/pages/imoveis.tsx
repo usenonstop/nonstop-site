@@ -114,14 +114,16 @@ export default function Imoveis() {
               <Select
                 label="Estado"
                 value={filters.state}
-                onChange={(s) => setFilters((f) => ({ ...f, state: s }))}
+                onChange={(s) =>
+                  setFilters((f) => ({ ...f, state: s, city: null }))
+                }
                 name="state"
                 options={states}
               />
               <Autocomplete
                 name="city"
                 isLoading={isLoading}
-                onClose={() => setFilters((f) => ({ ...f, city: "TODAS" }))}
+                onClose={() => setFilters((f) => ({ ...f, city: null }))}
                 options={cities}
                 onChange={(city) => setFilters((f) => ({ ...f, city }))}
                 onChangeInput={(i) => setCityQuery(i)}
