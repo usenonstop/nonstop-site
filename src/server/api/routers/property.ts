@@ -21,7 +21,10 @@ export const propertyRouter = createTRPCRouter({
       headers.append("Content-Type", "application/json");
       headers.append("Authorization", `Bearer ${token ?? env.NONSTOP_TOKEN}`);
 
-      const response = await fetch(`${getApiUrl()}/imoveis/home`, { headers });
+      const url = `${getApiUrl()}/imoveis/home`;
+      console.log(url);
+
+      const response = await fetch(url, { headers });
 
       if (response.ok) {
         const data = (await response.json()) as { properties: CardProperty[] };
