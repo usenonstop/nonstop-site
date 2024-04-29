@@ -10,7 +10,6 @@ import {
 import { PROPERTY_SORT_OPTIONS } from "~/consts/property";
 import { sortingToQuery } from "~/fns/sortingToQuery";
 import { useDebounce } from "~/hooks/useDebounce";
-import type { SortingState, StateFilter } from "~/types/property";
 import { Header, tokenAtom } from "~/ui/Header";
 import { MapButton } from "~/ui/MapButton";
 import { Pagination } from "~/ui/Pagination";
@@ -24,6 +23,7 @@ import { SortingButton } from "~/ui/SortingButton";
 import { Select } from "~/ui/Select";
 import { api } from "~/utils/api";
 import { Autocomplete } from "~/ui/Autocomplete";
+import type { SortingState } from "~/types/general";
 
 export default function Imoveis() {
   const [token] = useAtom(tokenAtom);
@@ -36,9 +36,11 @@ export default function Imoveis() {
   const [input, setInput] = useState("");
   const [search, setSearch] = useAtom(propertySearchAtom);
   const [cityQuery, setCityQuery] = useState("");
+  const [areaQuery, setAreaQuery] = useState("");
   const debouncedInput = useDebounce(input, 400);
   const debouncedFilters = useDebounce(filters, 400);
   const debouncedCityQuery = useDebounce(cityQuery, 400);
+  const debouncedAreaQuery = useDebounce(areaQuery, 400);
 
   useEffect(() => {
     setSearch(debouncedInput);
@@ -62,10 +64,20 @@ export default function Imoveis() {
     query: debouncedCityQuery,
   });
 
+  const { data: areasData, isLoading: areaIsLoading } = api.property[
+    "get-areas"
+  ].useQuery({
+    token,
+    state: filters.state,
+    city: filters.city,
+    query: debouncedAreaQuery,
+  });
+
   const properties = data?.properties ?? [];
   const total = data?.total ?? 0;
-  const states = statesData ? (["TODOS", ...statesData] as StateFilter[]) : [];
+  const states = statesData ?? [];
   const cities = citiesData ?? [];
+  const areas = areasData ?? [];
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
@@ -119,6 +131,7 @@ export default function Imoveis() {
                 }
                 name="state"
                 options={states}
+                nullLabel="Todos"
               />
               <Autocomplete
                 name="city"
@@ -129,6 +142,16 @@ export default function Imoveis() {
                 onChangeInput={(i) => setCityQuery(i)}
                 value={filters.city}
                 label="Cidade"
+              />
+              <Autocomplete
+                name="area"
+                isLoading={areaIsLoading}
+                onClose={() => setFilters((f) => ({ ...f, area: null }))}
+                options={areas}
+                onChange={(area) => setFilters((f) => ({ ...f, area }))}
+                onChangeInput={(i) => setAreaQuery(i)}
+                value={filters.area}
+                label="Bairro"
               />
             </div>
             <div className="mt-6 px-2 pb-10">

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { createAddressString } from "~/fns/createAddressString";
 import { createYtEmbedUrl } from "~/fns/createYtEmbedUrl";
-import type { MediaFile, MediaType, PropertyDTO } from "~/types/property";
+import type { MediaFile, MediaType, Property } from "~/types/property";
 import { PropertyMediaModal } from "~/ui/PropertyPage/MediaModal";
 import { StreetView } from "~/ui/PropertyPage/StreetView";
 
@@ -18,7 +18,7 @@ export const HeroImage = ({
   property,
   hideFloor,
 }: {
-  property: PropertyDTO;
+  property: Property;
   hideFloor?: boolean;
 }) => {
   const [showModal, setShowModal] = useState(false);
@@ -178,7 +178,7 @@ export const HeroImage = ({
         role="button"
         tabIndex={0}
         onClick={() => onClick(0)}
-        className="@container relative h-96 w-full md:overflow-hidden md:rounded-lg"
+        className="relative h-96 w-full @container md:overflow-hidden md:rounded-lg"
       >
         {!!lat && lng && media === "streetview" && (
           <StreetView position={{ lat, lng }} />
@@ -200,62 +200,62 @@ export const HeroImage = ({
         {(media === "images" ||
           media === "floorplans" ||
           media === "condo-images") && (
-          <>
-            <Image
-              draggable={false}
-              className="hidden object-cover"
-              alt={prevImage?.name ?? "Imóvel sem imagem"}
-              src={
-                prevImage?.url ??
-                "https://www.usenonstop.com/images/image-placeholder.webp"
-              }
-              priority
-              sizes="100vw 
+            <>
+              <Image
+                draggable={false}
+                className="hidden object-cover"
+                alt={prevImage?.name ?? "Imóvel sem imagem"}
+                src={
+                  prevImage?.url ??
+                  "https://www.usenonstop.com/images/image-placeholder.webp"
+                }
+                priority
+                sizes="100vw 
                 (min-width: 1280px) 1200px"
-              fill
-            />
-            <Image
-              draggable={false}
-              className="object-cover"
-              alt={firstImage?.name ?? "Imóvel sem imagem"}
-              src={
-                firstImage?.url ??
-                "https://www.usenonstop.com/images/image-placeholder.webp"
-              }
-              priority
-              sizes="100vw 
+                fill
+              />
+              <Image
+                draggable={false}
+                className="object-cover"
+                alt={firstImage?.name ?? "Imóvel sem imagem"}
+                src={
+                  firstImage?.url ??
+                  "https://www.usenonstop.com/images/image-placeholder.webp"
+                }
+                priority
+                sizes="100vw 
                 (min-width: 1280px) 1200px"
-              fill
-            />
-            <Image
-              draggable={false}
-              className="hidden object-cover"
-              alt={nextImage?.name ?? "Imóvel sem imagem"}
-              src={
-                nextImage?.url ??
-                "https://www.usenonstop.com/images/image-placeholder.webp"
-              }
-              priority
-              sizes="100vw 
+                fill
+              />
+              <Image
+                draggable={false}
+                className="hidden object-cover"
+                alt={nextImage?.name ?? "Imóvel sem imagem"}
+                src={
+                  nextImage?.url ??
+                  "https://www.usenonstop.com/images/image-placeholder.webp"
+                }
+                priority
+                sizes="100vw 
                 (min-width: 1280px) 1200px"
-              fill
-            />
+                fill
+              />
 
-            <div className="absolute bottom-0 h-40 w-full bg-gradient-to-t from-black to-transparent opacity-50" />
+              <div className="absolute bottom-0 h-40 w-full bg-gradient-to-t from-black to-transparent opacity-50" />
 
-            <div className="@sm:max-w-2xl absolute bottom-10 left-4 max-w-xs text-xl font-medium text-white">
-              {hideAddress
-                ? createAddressString(address, [])
-                : hideFloor
-                  ? createAddressString(address, ["number"])
-                  : createAddressString(address)}
-            </div>
+              <div className="absolute bottom-10 left-4 max-w-xs text-xl font-medium text-white @sm:max-w-2xl">
+                {hideAddress
+                  ? createAddressString(address, [])
+                  : hideFloor
+                    ? createAddressString(address, ["number"])
+                    : createAddressString(address)}
+              </div>
 
-            <div className="absolute bottom-4 left-4 max-w-xs truncate text-sm font-medium text-white">
-              {`${address.area} - ${address.city}/${address.state}`}
-            </div>
-          </>
-        )}
+              <div className="absolute bottom-4 left-4 max-w-xs truncate text-sm font-medium text-white">
+                {`${address.area} - ${address.city}/${address.state}`}
+              </div>
+            </>
+          )}
       </div>
 
       {showModal && (

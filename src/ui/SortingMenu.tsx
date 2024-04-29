@@ -5,7 +5,7 @@ import {
   forwardRef,
 } from "react";
 import { FaChevronDown } from "react-icons/fa";
-import type { SortingState } from "~/types/property";
+import type { SortingState } from "~/types/general";
 
 const SortingMenuComponent = (
   {

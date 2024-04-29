@@ -4,7 +4,7 @@ import { useCallback, useRef } from "react";
 
 import { getMapBounds } from "~/fns/getMapBounds";
 import { INITIAL_GOOGLE_MAPS_OPTION } from "~/consts/property";
-import type { MapBound } from "~/types/property";
+import type { MapBounds } from "~/types/property";
 import { env } from "~/env";
 
 export const useGoogleMap = ({
@@ -16,7 +16,7 @@ export const useGoogleMap = ({
   libraries,
 }: {
   options: Partial<google.maps.MapOptions>;
-  onBoundsChange?: (b: MapBound) => void;
+  onBoundsChange?: (b: MapBounds) => void;
   onZoomChange?: (z: number) => void;
   onCenterChange?: (c: { lat: number; lng: number }) => void;
   onLoad?: ({ map }: { map: google.maps.Map }) => void;

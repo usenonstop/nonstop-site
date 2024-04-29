@@ -3,7 +3,7 @@ import { AiOutlineCamera, AiOutlineVideoCamera } from "react-icons/ai";
 import { BiArea } from "react-icons/bi";
 import { HiOutlineMap } from "react-icons/hi";
 import { TbView360 } from "react-icons/tb";
-import type { PropertyDTO } from "~/types/property";
+import type { Property } from "~/types/property";
 import { MediaButton } from "~/ui/MediaButton";
 import {
   currentMediaIdxAtom,
@@ -12,7 +12,7 @@ import {
   videosAtom,
 } from "~/ui/PropertyPage/HeroImage";
 
-export const MediaButtons = ({ property }: { property: PropertyDTO }) => {
+export const MediaButtons = ({ property }: { property: Property }) => {
   const [media, setMedia] = useAtom(mediaAtom);
   const [, setImages] = useAtom(imagesAtom);
   const [, setVideos] = useAtom(videosAtom);

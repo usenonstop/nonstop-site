@@ -1,10 +1,5 @@
-import type {
-  AcceptsFilter,
-  FilterFace,
-  MinMax,
-  StateFilter,
-  TransactionStatus,
-} from "~/types/property";
+import { MinMax, UF as UFType } from "~/types/general";
+import { Accepts, Face, TransactionStatus } from "~/types/property";
 
 export const RESIDENTIAL_TYPE_WITH_LABEL = [
   { value: "TERRENO_RESIDENCIAL", label: "Terreno residencial" },
@@ -443,6 +438,7 @@ export const TRANSACTION_STATUS = [
   "VENDIDO",
   "ALUGADO",
   "BAIXOU_PRECO",
+  "INDISPONIVEL",
 ] as const;
 
 export const TRANSACTION_STATUS_WITH_LABEL = [
@@ -457,7 +453,6 @@ export const FILTER_AVAILABLE_FOR = [
   "VENDA",
   "LOCACAO",
   "VENDA_E_LOCACAO",
-  "INDISPONIVEL",
 ] as const;
 
 export const FILTER_AVAILABLE_FOR_WITH_LABEL = [
@@ -524,8 +519,9 @@ export const AGENT_MANAGED_BY_WITH_LABEL = [
 ] as const;
 
 export const INITIAL_PROPERTY_FILTER = {
-  state: "TODOS" as StateFilter,
+  state: null as UFType | null,
   city: null as string | null,
+  area: null as string | null,
   use: [...PROPERTY_USE],
   managedBy: [...AGENT_MANAGED_BY],
   residentialTypes: [...RESIDENTIAL_TYPE],
@@ -533,7 +529,7 @@ export const INITIAL_PROPERTY_FILTER = {
   status: [...PROPERTY_STATUS],
   transactionStatus: ["SEM_OBSERVACOES", "BAIXOU_PRECO"] as TransactionStatus[],
   availableFor: [...FILTER_AVAILABLE_FOR],
-  accepts: ["INDIFERENTE"] as AcceptsFilter[],
+  accepts: ["INDIFERENTE"] as ("INDIFERENTE" | Accepts)[],
   values: {
     sale: { min: null, max: null } as MinMax,
     longStay: { min: null, max: null } as MinMax,
@@ -544,7 +540,7 @@ export const INITIAL_PROPERTY_FILTER = {
     useful: { min: null, max: null } as MinMax,
     land: { min: null, max: null } as MinMax,
   },
-  face: ["ANY"] as FilterFace[],
+  face: ["ANY"] as ("ANY" | Face)[],
   floor: { min: null, max: null } as MinMax,
   zapRating: { min: null, max: null } as MinMax,
   minBaths: null as number | null,
@@ -582,5 +578,3 @@ export const UF = [
   "SE",
   "TO",
 ] as const;
-
-export const UF_FILTER = ["TODOS", ...UF] as const;

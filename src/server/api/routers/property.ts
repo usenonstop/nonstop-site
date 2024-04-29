@@ -1,16 +1,11 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { UF_FILTER } from "~/consts/property";
+import { UF } from "~/consts/property";
 import { env } from "~/env";
 import { getAllInputSchema, getMarkersInputSchema } from "~/schemas/property";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import type {
-  CardProperty,
-  Marker,
-  PropertyDTO,
-  TableProperty,
-  UF,
-} from "~/types/property";
+import type { UF as UFType } from "~/types/general";
+import type { CardProperty, Marker, Property } from "~/types/property";
 import { getApiUrl } from "~/utils/api";
 
 export const propertyRouter = createTRPCRouter({
@@ -22,14 +17,10 @@ export const propertyRouter = createTRPCRouter({
       headers.append("Authorization", `Bearer ${token ?? env.NONSTOP_TOKEN}`);
 
       const url = `${getApiUrl()}/imoveis/home`;
-      console.log(url);
 
       const response = await fetch(url, { headers });
 
-      if (response.ok) {
-        const data = (await response.json()) as { properties: CardProperty[] };
-        return data.properties;
-      }
+      if (response.ok) return (await response.json()) as CardProperty[];
 
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
@@ -48,10 +39,7 @@ export const propertyRouter = createTRPCRouter({
         headers,
       });
 
-      if (response.ok) {
-        const data = (await response.json()) as { properties: CardProperty[] };
-        return data.properties;
-      }
+      if (response.ok) return (await response.json()) as CardProperty[];
 
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
@@ -75,9 +63,7 @@ export const propertyRouter = createTRPCRouter({
         headers,
       });
 
-      if (response.ok) {
-        return ((await response.json()) as { property: PropertyDTO }).property;
-      }
+      if (response.ok) return (await response.json()) as Property;
 
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
@@ -103,7 +89,7 @@ export const propertyRouter = createTRPCRouter({
 
       if (response.ok) {
         return (await response.json()) as {
-          properties: TableProperty[];
+          properties: CardProperty[];
           total: number;
         };
       }
@@ -130,9 +116,7 @@ export const propertyRouter = createTRPCRouter({
         body: JSON.stringify(input),
       });
 
-      if (response.ok) {
-        return ((await response.json()) as { markers: Marker[] }).markers;
-      }
+      if (response.ok) return (await response.json()) as Marker[];
 
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
@@ -151,9 +135,7 @@ export const propertyRouter = createTRPCRouter({
         headers,
       });
 
-      if (response.ok) {
-        return ((await response.json()) as { states: UF[] }).states;
-      }
+      if (response.ok) return (await response.json()) as UFType[];
 
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
@@ -165,7 +147,7 @@ export const propertyRouter = createTRPCRouter({
     .input(
       z.object({
         token: z.string().nullish(),
-        state: z.enum(UF_FILTER),
+        state: z.enum(UF).nullable(),
         query: z.string(),
       }),
     )
@@ -180,9 +162,35 @@ export const propertyRouter = createTRPCRouter({
         { headers },
       );
 
-      if (response.ok) {
-        return ((await response.json()) as { cities: string[] }).cities;
-      }
+      if (response.ok) return (await response.json()) as string[];
+
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Ops, houve um problema",
+      });
+    }),
+
+  "get-areas": publicProcedure
+    .input(
+      z.object({
+        token: z.string().nullish(),
+        state: z.enum(UF).nullable(),
+        city: z.string().nullable(),
+        query: z.string(),
+      }),
+    )
+    .query(async ({ input }) => {
+      const { state, token, query, city } = input;
+      const headers = new Headers();
+      headers.append("Content-Type", "application/json");
+      headers.append("Authorization", `Bearer ${token ?? env.NONSTOP_TOKEN}`);
+
+      const response = await fetch(
+        `${getApiUrl()}/imoveis/bairros?state=${state}&city=${city}&query=${query}`,
+        { headers },
+      );
+
+      if (response.ok) return (await response.json()) as string[];
 
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",

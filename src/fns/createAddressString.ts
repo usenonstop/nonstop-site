@@ -1,4 +1,4 @@
-import type { Address } from "~/types/property";
+import type { Address } from "~/types/general";
 
 /**
  * Creates a string address from an address object

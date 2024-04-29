@@ -1,4 +1,4 @@
-import type { UF } from "~/types/property";
+import type { UF } from "~/types/general";
 
 export interface AgentsPageAgent {
   id: string;

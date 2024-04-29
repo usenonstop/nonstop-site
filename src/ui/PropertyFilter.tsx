@@ -2,14 +2,14 @@ import { useEffect, useRef } from "react";
 import { useAtom } from "jotai";
 
 import type {
-  AcceptsFilter,
+  CommercialType,
+  FilterAccepts,
   FilterAvailableFor,
   FilterFace,
-  PropertyUse,
   ResidentialType,
-  CommercialType,
-  TransactionStatus,
   Status,
+  TransactionStatus,
+  Use,
 } from "~/types/property";
 import { InputLabel } from "~/ui/InputLabel";
 import { Checkbox } from "~/ui/Checkbox";
@@ -55,7 +55,7 @@ export const PropertyFilter = () => {
   const [polygons, setPolygons] = useAtom(propertyMapPolygonsAtom);
   const [, setCreatedPolygons] = useAtom(propertyMapCreatedPolygonsAtom);
 
-  const handleClickUse = (t: PropertyUse) => {
+  const handleClickUse = (t: Use) => {
     setPagination((p) => ({ ...p, currPage: 1 }));
 
     const newFilters = structuredClone(filters);
@@ -91,7 +91,7 @@ export const PropertyFilter = () => {
       newFilters.residentialTypes = [...newFilters.residentialTypes, t];
       newFilters.use = [
         ...Array.from(new Set([...newFilters.use, "RESIDENCIAL"])),
-      ] as PropertyUse[];
+      ] as Use[];
     }
 
     void setFilters(newFilters);
@@ -111,7 +111,7 @@ export const PropertyFilter = () => {
       newFilters.commercialTypes = [...newFilters.commercialTypes, t];
       newFilters.use = [
         ...Array.from(new Set([...newFilters.use, "COMERCIAL"])),
-      ] as PropertyUse[];
+      ] as Use[];
     }
     void setFilters(newFilters);
   };
@@ -159,7 +159,7 @@ export const PropertyFilter = () => {
     void setFilters(newFilters);
   };
 
-  const handleClickAccepts = (s: AcceptsFilter) => {
+  const handleClickAccepts = (s: FilterAccepts) => {
     setPagination((p) => ({ ...p, currPage: 1 }));
     const newFilters = structuredClone(filters);
     if (s === "INDIFERENTE") {

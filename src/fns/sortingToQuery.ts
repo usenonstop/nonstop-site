@@ -1,4 +1,4 @@
-import type { Sort, SortingState } from "~/types/property";
+import type { Sort, SortingState } from "~/types/general";
 
 /**
  * Convert sorting from react table to mongo sort by

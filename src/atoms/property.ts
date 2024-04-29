@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 import { INITIAL_PROPERTY_FILTER } from "~/consts/property";
-import type { MapMarker } from "~/types/property";
+import type { MapMarker, Marker } from "~/types/property";
 
 export const propertyPaginationAtom = atom({ perPage: 20, currPage: 1 });
 export const propertyPerimetersAtom = atom<string[]>([]);
@@ -13,7 +13,7 @@ export const propertyFilterAtom = atom(
 
 export const propertyMapZoomAtom = atom(12);
 export const propertyMapWidthAtom = atom(400);
-export const propertyMapSelectedProperties = atom<MapMarker["position"][]>([]);
+export const propertyMapSelectedProperties = atom<Marker["position"][]>([]);
 export const propertyMapCenterAtom = atom({
   lat: -23.57,
   lng: -46.65,

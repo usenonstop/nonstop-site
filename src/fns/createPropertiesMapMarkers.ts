@@ -1,4 +1,4 @@
-import type { MapMarker, MarkerProperty } from "~/types/property";
+import type { MapMarker, Marker } from "~/types/property";
 import { createClusterIcon } from "~/fns/createClusterIcon";
 import { isTheSameMarker } from "~/fns/isTheSameMarker";
 import type { onClickMarkerParams } from "~/types/property";
@@ -10,7 +10,7 @@ export const createPropertiesMapMarkers = ({
   markers,
 }: {
   map: google.maps.Map | null;
-  locations: MarkerProperty[];
+  locations: Marker[];
   onClickMarker: ({ map, size, position }: onClickMarkerParams) => void;
   markers: MapMarker[];
 }) => {
@@ -20,7 +20,7 @@ export const createPropertiesMapMarkers = ({
   let newMarkers = [...markers];
 
   const handleClickMarker =
-    (position: MarkerProperty["position"], size: number) => () =>
+    (position: Marker["position"], size: number) => () =>
       onClickMarker({ map, position, size });
 
   for (const location of locations) {

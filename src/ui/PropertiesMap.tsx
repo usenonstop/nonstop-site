@@ -22,7 +22,7 @@ import { createMapButton } from "~/fns/createMapButton";
 import { createPropertiesMapMarkers } from "~/fns/createPropertiesMapMarkers";
 import { isTheSameMarker } from "~/fns/isTheSameMarker";
 import { loadDrawingManager } from "~/fns/loadDrawingManager";
-import type { MarkerProperty } from "~/types/property";
+import type { Marker } from "~/types/property";
 import { onOverlayComplete } from "~/fns/onOverlayComplete";
 import { encodePerimeter } from "~/fns/encodePerimeter";
 import { createGoogleMapsPolygonFromPaths } from "~/fns/createGoogleMapsPolygonFromPaths";
@@ -32,7 +32,7 @@ import { api } from "~/utils/api";
 export type onClickMarkerParams = {
   map: google.maps.Map;
   size: number;
-  position: MarkerProperty["position"];
+  position: Marker["position"];
 };
 
 export const PropertiesMap = () => {

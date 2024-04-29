@@ -3,7 +3,7 @@ import { type Libraries } from "@googlemaps/js-api-loader";
 import { useEffect } from "react";
 import { useGoogleMap } from "~/hooks/useGoogleMap";
 
-import type { MapBound } from "~/types/property";
+import type { MapBounds } from "~/types/property";
 
 export const GoogleMap = ({
   options,
@@ -15,7 +15,7 @@ export const GoogleMap = ({
 }: {
   options: Partial<google.maps.MapOptions>;
   onLoad?: ({ map }: { map: google.maps.Map }) => void;
-  onBoundsChange?: (b: MapBound) => void;
+  onBoundsChange?: (b: MapBounds) => void;
   onZoomChange?: (z: number) => void;
   onCenterChange?: (c: { lat: number; lng: number }) => void;
   libraries?: Libraries;

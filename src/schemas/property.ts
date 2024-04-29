@@ -10,7 +10,7 @@ import {
   PROPERTY_USE,
   RESIDENTIAL_TYPE,
   TRANSACTION_STATUS,
-  UF_FILTER,
+  UF,
 } from "~/consts/property";
 
 export const paginationSchema = z.object({
@@ -31,8 +31,9 @@ export const minMaxSchema = z.object({
 });
 
 export const propertyFilterSchema = z.object({
-  state: z.enum(UF_FILTER),
+  state: z.enum(UF).nullable(),
   city: z.string().nullable(),
+  area: z.string().nullable(),
   managedBy: z.enum(MANAGED_BY).array(),
   use: z.enum(PROPERTY_USE).array(),
   residentialTypes: z.enum(RESIDENTIAL_TYPE).array(),

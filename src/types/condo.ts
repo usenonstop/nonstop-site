@@ -1,7 +1,7 @@
-import type { UserEmbed } from "~/types/agent";
-import type { Address, Media, MinMax } from "~/types/property";
+import type { Address, MinMax } from "~/types/general";
+import type { UserEmbed } from "~/types/user";
 
-type CondoFeature =
+type CondoFeatures =
   | "ACADEMIA"
   | "ACESSO_PCD"
   | "AREA_DE_LAZER"
@@ -65,6 +65,31 @@ type CondoFeature =
   | "VESTIARIO"
   | "ZELADOR";
 
+export interface MediaFile {
+  id: string;
+  name: string;
+  type: string;
+  size: number;
+  url: string;
+}
+
+export interface Media {
+  images: MediaFile[];
+  floorPlans: MediaFile[];
+  promotionalFiles: MediaFile[];
+  videos: string[];
+  tours: string[];
+}
+
+export interface CondoEmbed {
+  id: string;
+  features: CondoFeatures[];
+  media: Media;
+  name: string;
+  address: Address;
+  yearOfConstruction: number | null;
+}
+
 type CondoType =
   | "COMERCIAL"
   | "RESIDENCIAL_VERTICAL"
@@ -78,7 +103,7 @@ export interface CondoDTO {
   yearOfConstruction: number | null;
   receptionPhone: string | null;
   address: Address;
-  features: CondoFeature[];
+  features: CondoFeatures[];
   media: Media;
   user: UserEmbed;
   rooms: MinMax;

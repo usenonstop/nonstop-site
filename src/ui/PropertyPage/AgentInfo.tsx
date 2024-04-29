@@ -2,9 +2,9 @@ import { Avatar } from "~/ui/Avatar";
 import { ContactButton } from "~/ui/ContactButton";
 import { FaPhone, FaWhatsapp } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
-import type { PropertyDTO } from "~/types/property";
+import type { Property } from "~/types/property";
 
-export const AgentInfo = ({ property }: { property: PropertyDTO }) => {
+export const AgentInfo = ({ property }: { property: Property }) => {
   return (
     <div className="absolute bottom-0 right-40 z-10 h-[calc(100%-500px)]">
       <div className="sticky top-10 hidden w-96 flex-col gap-4 rounded-lg bg-white p-7 shadow-lg xl:flex">
@@ -36,9 +36,8 @@ export const AgentInfo = ({ property }: { property: PropertyDTO }) => {
             invert
             fullWidth
             show={!!property.user.whatsapp}
-            href={`https://wa.me/+55${
-              property.user.whatsapp?.replace(/\D/g, "") ?? ""
-            }`}
+            href={`https://wa.me/+55${property.user.whatsapp?.replace(/\D/g, "") ?? ""
+              }`}
             icon={<FaWhatsapp />}
             label="Whatsapp"
           />

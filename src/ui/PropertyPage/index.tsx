@@ -15,7 +15,7 @@ import { applyFloatMask } from "~/fns/applyFloatMask";
 import { applyIntMask } from "~/fns/applyIntMask";
 import { createPropertyTitle } from "~/fns/createPropertyTitle";
 import { formatPrice } from "~/fns/formatPrice";
-import type { PropertyDTO } from "~/types/property";
+import type { Property } from "~/types/property";
 import { Avatar } from "~/ui/Avatar";
 import { ContactButton } from "~/ui/ContactButton";
 import { IconValue } from "~/ui/IconValue";
@@ -30,7 +30,7 @@ export const PropertyPage = ({
   property,
   hideFloor,
 }: {
-  property: PropertyDTO;
+  property: Property;
   hideFloor?: boolean;
 }) => {
   const isLand =
@@ -329,9 +329,8 @@ export const PropertyPage = ({
             />
             <ContactButton
               show={!!property.user.whatsapp}
-              href={`https://wa.me/+55${
-                property.user.whatsapp?.replace(/\D/g, "") ?? ""
-              }`}
+              href={`https://wa.me/+55${property.user.whatsapp?.replace(/\D/g, "") ?? ""
+                }`}
               icon={<FaWhatsapp />}
               label="Whatsapp"
             />

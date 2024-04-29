@@ -2,7 +2,7 @@ import type { Dispatch, SetStateAction } from "react";
 import { BiSortAlt2 } from "react-icons/bi";
 
 import { useClickOutside } from "~/hooks/useClickOutside";
-import type { SortingState } from "~/types/property";
+import type { SortingState } from "~/types/general";
 import { SortingMenu } from "~/ui/SortingMenu";
 
 export const SortingButton = ({
@@ -34,7 +34,7 @@ export const SortingButton = ({
   };
   return (
     <div
-      className={`@container pointer-events-none relative z-10 w-full max-w-[160px] rounded-lg ${
+      className={`pointer-events-none relative z-10 w-full max-w-[160px] rounded-lg @container ${
         showDesktop ? "" : "xl:hidden"
       } ${className}`}
     >
@@ -48,7 +48,7 @@ export const SortingButton = ({
       >
         <div className="flex h-12 w-12 shrink-0 grow items-center justify-center gap-2 rounded-lg border border-gray-300 text-sm hover:bg-gray-100">
           <BiSortAlt2 size={18} />
-          <span className="@[100px]:flex hidden">Ordenar</span>
+          <span className="hidden @[100px]:flex">Ordenar</span>
         </div>
       </button>
 
