@@ -250,6 +250,7 @@ export interface CardProperty {
 export interface CommonFields {
   id: string;
   availableFor: AvailableFor[];
+  title: string;
   accepts: Accepts[];
   status: Status;
   baths: number | null;
