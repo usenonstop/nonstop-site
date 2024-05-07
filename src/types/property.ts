@@ -261,7 +261,7 @@ export interface CommonFields {
   values: Values;
   areas: Areas;
   yearOfConstruction: number | null;
-  condo: CondoEmbed;
+  condo: CondoEmbed | null;
   address: Address;
   description: string;
   privateObservations: string | null;

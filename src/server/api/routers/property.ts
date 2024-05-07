@@ -81,10 +81,13 @@ export const propertyRouter = createTRPCRouter({
         `Bearer ${input.token ?? env.NONSTOP_TOKEN}`,
       );
 
+      const body = JSON.stringify(input);
+      console.log(body);
+
       const response = await fetch(`${getApiUrl()}/imoveis/todos`, {
         headers,
         method: "POST",
-        body: JSON.stringify(input),
+        body,
       });
 
       if (response.ok) {
